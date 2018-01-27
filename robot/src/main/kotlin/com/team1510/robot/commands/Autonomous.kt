@@ -1,9 +1,6 @@
 package com.team1510.robot.commands
 
-import com.team2898.engine.motion.CheesyDrive
 import edu.wpi.first.wpilibj.command.Command
-import main.kotlin.com.team1510.robot.OI
-import main.kotlin.com.team1510.robot.subsystems.Drivetrain
 
 class Autonomous : Command() {
 

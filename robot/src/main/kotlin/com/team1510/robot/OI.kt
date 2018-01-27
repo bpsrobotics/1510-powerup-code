@@ -1,7 +1,6 @@
-package main.kotlin.com.team1510.robot
+package com.team1510.robot
 
 import edu.wpi.first.wpilibj.Joystick
-import edu.wpi.first.wpilibj.networktables.NetworkTable
 
 object OI {
 
@@ -24,7 +23,7 @@ object OI {
         //left and right on the left
 
     val quickTurn: Boolean
-        get() = (driverController.getRawAxis(2) + driverController.getRawAxis(3)) != 0.0
+        get() = (Math.max(driverController.getRawAxis(2) , driverController.getRawAxis(3))) != 0.0
 
     val leftTrigger
         get() = driverController.getRawAxis(2)

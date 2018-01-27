@@ -1,11 +1,10 @@
-package main.kotlin.com.team1510.robot.subsystems
+package com.team1510.robot.subsystems
 
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
-import main.kotlin.com.team1510.robot.config.*
 
 object Drivetrain : Subsystem(50.0, "Drivetrain") {
 
@@ -18,7 +17,6 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     init {
         leftSlave slaveTo leftMaster
         rightSlave slaveTo rightMaster
-
         masters {
             enableVoltageCompensation(true)
             configVoltageCompSaturation(12.0, 0)
@@ -37,10 +35,11 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
         }
     }
 
+
     fun updateDrive(input: DriveSignal)
     {
         leftMaster.set(input.left)
-        rightMaster.set(input.right)
+        rightMaster.set(-input.right)
     }
 
     fun masters(block: TalonWrapper.() -> Unit) {
@@ -49,31 +48,21 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
         }
     }
 
-    override fun onStart() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onStart() {}
 
-    override fun onLoop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onLoop() {}
 
-    override fun onStop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onStop() {}
 
     override fun selfCheckup(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return false
     }
 
     override fun selfTest(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return false
     }
 
-    override val enableTimes: List<GamePeriods>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
-
-
+    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
 
 
 }

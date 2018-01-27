@@ -1,2 +1,2 @@
-package main.kotlin.com.team1510.robot.subsystems
+package com.team1510.robot.subsystems
 
