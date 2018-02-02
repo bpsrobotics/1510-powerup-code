@@ -30,4 +30,6 @@ const val LEFT_INTAKE_SOL_REV_ID: Int = 12
 const val RIGHT_INTAKE_PWM_ID: Int = 1
 const val LEFT_INTAKE_PWM_ID: Int = 2
 
-
+//Arm
+const val LEFT_ARM_MOTOR_ID: Int = 1
+const val RIGHT_ARM_MOTOR_ID: Int = 2
