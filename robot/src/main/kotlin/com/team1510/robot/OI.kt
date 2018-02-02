@@ -16,6 +16,9 @@ object OI {
     val driverController: Joystick = Joystick(0)
     val manipController: Joystick = Joystick(1)
 
+    val intakeExtend: Boolean
+        get() = manipController.getRawAxis(2) != 0.0
+
     val throttle
         get() = deadzone(driverController.getRawAxis(1))
         //up and down on the left joystick
