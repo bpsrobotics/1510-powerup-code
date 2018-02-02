@@ -14,10 +14,9 @@ object Arm : Subsystem(50.0, "Arm") {
 
     init {
 
-        slaveArm slaveTo masterArm
+        val talonWrapper = slaveArm slaveTo masterArm
 
-        masterArm.enableVoltageCompensation(true)
-        masterArm.configVoltageCompSaturation(12.0, 0)
+        masterArm.setPositionControl()
 
         masterArm.setMagEncoder()
 
@@ -29,10 +28,19 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms, 0)
         masterArm.configVelocityMeasurementWindow(32, 0)
 
-        masterArm.setPID(Kp, Ki, Kd, Kf)
+        masterArm.setPID(0, 0, 0, 0)
     }
 
-    
+    fun moveToPos(degrees:Int): Int {
+        var a = (masterArm.sensorCollection.quadraturePosition * 360 ) / 4096
+        if (a < degrees) {
+            //degree decrease to a
+        } else {
+            //degree increase to a
+        }
+        return degrees
+    }
+
     override fun onStart() {}
 
     override fun onLoop() {}
