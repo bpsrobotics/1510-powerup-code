@@ -35,12 +35,37 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
         }
     }
 
+    fun setVelocityControl()
+    {
+        masters {setVelocityControl()}
+    }
 
     fun updateDrive(input: DriveSignal)
     {
         leftMaster.set(input.left)
         rightMaster.set(-input.right)
+
+       // println("$input")
     }
+
+    val leftEncPostion
+        get() = leftMaster.sensorCollection.quadraturePosition.toDouble() * ENC_TO_IN
+
+    val rightEncPosition
+        get() = rightMaster.sensorCollection.quadraturePosition.toDouble() * ENC_TO_IN
+
+    val leftEncVelocity
+        get() = leftMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
+
+    val rightEncVelocity
+        get() = rightMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
+
+    fun resetEncoders()
+    {
+        leftMaster.sensorCollection.setQuadraturePosition(0, 10)
+        rightMaster.sensorCollection.setQuadraturePosition(0, 10)
+    }
+
 
     fun masters(block: TalonWrapper.() -> Unit) {
         masterList.forEach { srx ->

@@ -5,11 +5,15 @@ import edu.wpi.first.wpilibj.command.Command
 import com.team1510.robot.OI
 import com.team1510.robot.subsystems.Drivetrain
 import com.team2898.engine.async.AsyncLooper
+import com.ctre.phoenix.motorcontrol.ControlMode
+
+
 
 class Teleop : Command() {
 
     override fun initialize() {
-
+        Drivetrain.resetEncoders()
+        //Drivetrain.setVelocityControl()
     }
 
     override fun execute() {
@@ -22,8 +26,15 @@ class Teleop : Command() {
                         true
                 )
         )
+
+        //val targetVelocity = OI.throttle * 4096 * 500.0 / 600
+        /* 1500 RPM in either direction */
+        //Drivetrain.rightMaster.set(ControlMode.Velocity, targetVelocity)
         AsyncLooper(1.0) {
-            println("throttle ${OI.throttle}")
+            //println("Position ${Drivetrain.leftEncPostion} , ${Drivetrain.rightEncPosition}")
+            println("Velocity ${Drivetrain.leftEncVelocity} , ${Drivetrain.rightEncVelocity}")
+            //println("Error ${Drivetrain.rightMaster.getClosedLoopError(0)}")
+
         }.start()
     }
     override fun isFinished(): Boolean {
