@@ -1,17 +1,19 @@
 package com.team1510.robot
 
 import com.team1510.robot.commands.Autonomous
+import com.team1510.robot.commands.PIDTeleop
 import com.team2898.engine.logic.LoopManager
 import edu.wpi.first.wpilibj.IterativeRobot
 import edu.wpi.first.wpilibj.command.Scheduler
-import com.team1510.robot.commands.Teleop
+//import com.team1510.robot.commands.Teleop
+import com.team1510.robot.subsystems.DrivePIDTest
 import edu.wpi.first.wpilibj.networktables.NetworkTable as nt
 
 class Robot : IterativeRobot() {
 
     val autoCommand = Autonomous()
 
-    val teleopCommand = Teleop()
+    val teleopCommand = PIDTeleop()
     override fun robotInit() {
 
     }
