@@ -45,6 +45,10 @@ object DrivePIDTest : Subsystem(50.0, "DrivePIDTest") {
 
             configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms, 0)
             configVelocityMeasurementWindow(32, 0)
+
+            configForwardSoftLimitEnable(false,0)
+            configReverseSoftLimitEnable(false, 0)
+
         }
 
         _talon.setPID(0.0, Ki, Kd, .282)
