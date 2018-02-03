@@ -13,12 +13,13 @@ object OI {
     fun convertVelocity (input: Double): Double {
         return input * 4096 * 500.0 / 600
     }
+
+    //Initiate controllers
     val driverController: Joystick = Joystick(0)
     val manipController: Joystick = Joystick(1)
 
-    val intakeExtend: Boolean
-        get() = manipController.getRawAxis(2) != 0.0
 
+    //Begin driver controls
     val throttle
         get() = deadzone(driverController.getRawAxis(1))
         //up and down on the left joystick
@@ -57,4 +58,15 @@ object OI {
     val deployRamp
         get() = driverController.getRawButton(7)
 
+    //Begin operator controls
+    val intake:Boolean
+        get() = manipController.getRawAxis(3) < 0
+    val outtake:Boolean
+        get() = manipController.getRawAxis(3) > 0
+    val intakeExtend
+        get() = manipController.getRawButton(1)
+        //a button
+    val intakeRetract
+        get() = manipController.getRawButton(2)
+        //b button
 }

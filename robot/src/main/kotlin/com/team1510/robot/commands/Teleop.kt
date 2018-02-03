@@ -6,7 +6,7 @@ import com.team1510.robot.OI
 import com.team1510.robot.subsystems.Drivetrain
 import com.team2898.engine.async.AsyncLooper
 import com.ctre.phoenix.motorcontrol.ControlMode
-
+import com.team1510.robot.subsystems.Intake
 
 
 class Teleop : Command() {
@@ -27,6 +27,14 @@ class Teleop : Command() {
                 )
         )
 
+        if(OI.intake) Intake.intake()
+
+        if(OI.outtake) Intake.outtake()
+
+        if(OI.intakeExtend) Intake.intakePosition(true, true)
+
+        if(OI.intakeRetract) Intake.intakePosition(true, false)
+        
         //val targetVelocity = OI.throttle * 4096 * 500.0 / 600
         /* 1500 RPM in either direction */
         //Drivetrain.rightMaster.set(ControlMode.Velocity, targetVelocity)
@@ -37,6 +45,8 @@ class Teleop : Command() {
 
         }.start()
     }
+
+
     override fun isFinished(): Boolean {
         return false
     }
