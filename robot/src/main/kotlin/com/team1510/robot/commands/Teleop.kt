@@ -19,9 +19,9 @@ class Teleop : Command() {
             //println("Position ${Drivetrain.leftEncPostion} , ${Drivetrain.rightEncPosition}")
             //println("Velocity ${Drivetrain.leftEncVelocity} , ${Drivetrain.rightEncVelocity}")
             //println("Error ${Drivetrain.rightMaster.getClosedLoopError(0)}")
-            // println("Arm input ${OI.manipRightY},")
-            if(OI.intake) println("Intaking")
-            if(OI.outtake) println("Releasing")
+            println("Arm input ${OI.manipRightY}")
+            //if(OI.intake) println("Intaking")
+            //if(OI.outtake) println("Releasing")
 
         }.start()
     }
@@ -39,13 +39,13 @@ class Teleop : Command() {
 
 
         Intake.updateIntake(OI.intake, OI.outtake)
-        println("${OI.intake}, ${OI.outtake}")
+        //println("${OI.intake}, ${OI.outtake}")
 
         if(OI.manipA) Intake.intakeExtend()
 
         if(OI.manipB) Intake.intakeRetract()
 
-        //Arm.updatePower(OI.manipRightY)
+        Arm.updatePower(OI.manipRightY)
 
         
         //val targetVelocity = OI.throttle * 4096 * 500.0 / 600

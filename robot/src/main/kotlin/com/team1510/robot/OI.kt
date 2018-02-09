@@ -72,6 +72,6 @@ object OI {
         get() = manipController.getRawButton(2)
         //b button
     val manipRightY
-            get() = deadzone(driverController.getRawAxis(5))
+            get() = deadzone(manipController.getRawAxis(5))
             //up and down on the left joystick
 }
