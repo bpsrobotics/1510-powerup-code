@@ -9,14 +9,14 @@ import com.team2898.engine.motion.TalonWrapper
 object Arm : Subsystem(50.0, "Arm") {
 
 
-    val masterArm = TalonWrapper(LEFT_ARM_MOTOR_ID)
-    val slaveArm = TalonWrapper(RIGHT_ARM_MOTOR_ID)
+    val masterArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
+    val slaveArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
 
     init {
 
-        val talonWrapper = slaveArm slaveTo masterArm
+        slaveArm slaveTo masterArm
 
-        masterArm.setPositionControl()
+       // masterArm.setPositionControl()
 
         masterArm.setMagEncoder()
 
@@ -28,7 +28,7 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms, 0)
         masterArm.configVelocityMeasurementWindow(32, 0)
 
-        masterArm.setPID(0, 0, 0, 0)
+        masterArm.setPID(0.0, 0.0, 0.0, 0.0)
     }
 
     fun moveToPos(degrees:Int): Int {
@@ -39,6 +39,10 @@ object Arm : Subsystem(50.0, "Arm") {
             //degree increase to a
         }
         return degrees
+    }
+
+    fun updatePower(input: Double) {
+        masterArm.set(input)
     }
 
     override fun onStart() {}

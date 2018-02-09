@@ -59,14 +59,19 @@ object OI {
         get() = driverController.getRawButton(7)
 
     //Begin operator controls
-    val intake:Boolean
-        get() = manipController.getRawAxis(3) < 0
+    val     intake:Boolean
+        get() = deadzone(manipController.getRawAxis(2)) > 0
+
     val outtake:Boolean
-        get() = manipController.getRawAxis(3) > 0
-    val intakeExtend
+        get() = deadzone(manipController.getRawAxis(3)) > 0
+
+    val manipA
         get() = manipController.getRawButton(1)
         //a button
-    val intakeRetract
+    val manipB
         get() = manipController.getRawButton(2)
         //b button
+    val manipRightY
+            get() = deadzone(driverController.getRawAxis(5))
+            //up and down on the left joystick
 }
