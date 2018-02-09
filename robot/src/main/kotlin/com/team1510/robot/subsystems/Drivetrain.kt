@@ -44,7 +44,6 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     {
         leftMaster.set(input.left)
         rightMaster.set(-input.right)
-
        // println("$input")
     }
 
