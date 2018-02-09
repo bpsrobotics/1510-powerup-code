@@ -30,7 +30,7 @@ object Arm : Subsystem(50.0, "Arm") {
 
         masterArm.setPID(0, 0, 0, 0)
     }
-
+//Enter a degree so the arm can turn to
     fun moveToPos(degrees:Int): Int {
         var a = (masterArm.sensorCollection.quadraturePosition * 360 ) / 4096
         if (a < degrees) {

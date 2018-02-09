@@ -26,7 +26,16 @@ class Teleop : Command() {
                         true
                 )
         )
-
+//Arm's reaction according to button pressing
+    if (OI.bButton) {
+        Arm.moveToPos(/*full forward angle*/)
+    }
+    if (OI.xButton) {
+        Arm.moveToPos(/*full backward angle*/)
+    }
+    if (OI.yButton) {
+        Arm.moveToPos(/*mid position angle*/)
+    }
         //val targetVelocity = OI.throttle * 4096 * 500.0 / 600
         /* 1500 RPM in either direction */
         //Drivetrain.rightMaster.set(ControlMode.Velocity, targetVelocity)

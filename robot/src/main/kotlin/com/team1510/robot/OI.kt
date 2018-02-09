@@ -37,24 +37,25 @@ object OI {
         get() = driverController.getRawAxis(3)
 
     val leftBumper
-        get() = driverController.getRawButton(5)
+        get() = manipController.getRawButton(5)
 
     val rightBumper
-        get() = driverController.getRawButton(6)
+        get() = manipController.getRawButton(6)
 
     val aButton
-        get() = driverController.getRawButton(1)
+        get() = manipController.getRawButton(1)
 
     val bButton
-        get() = driverController.getRawButton(2)
+        get() = manipController.getRawButton(2)
 
     val xButton
-        get() = driverController.getRawButton(3)
+        get() = manipController.getRawButton(3)
 
     val yButton
-        get() = driverController.getRawButton(4)
+        get() = manipController.getRawButton(4)
 
-    val deployRamp
+    val driverDeployRamp
         get() = driverController.getRawButton(7)
-
+    val manipDeployRamp
+        get() = manipController.getRawButton(7)
 }
