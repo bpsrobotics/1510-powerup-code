@@ -38,7 +38,9 @@ class Teleop : Command() {
         )
 
 
-        Intake.updateIntake(OI.intake, OI.outtake)
+        Intake.updateRightIntake(OI.manipRightTrigger, OI.manipRightBumper)
+        Intake.updateLeftIntake(OI.manipLeftTrigger, OI.manipLeftBumper)
+
         //println("${OI.intake}, ${OI.outtake}")
 
         if(OI.manipA) Intake.intakeExtend()
