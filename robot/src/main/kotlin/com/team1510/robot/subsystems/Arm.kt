@@ -31,14 +31,19 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.setPID(0.0, 0.0, 0.0, 0.0)
     }
 //Enter a degree so the arm can turn to
-    fun moveToPos(degrees:Int): Int {
+    fun moveToPos(degrees:Int) {
         var a = (masterArm.sensorCollection.quadraturePosition * 360 ) / 4096
         if (a < degrees) {
-            //degree decrease to a
-        } else {
-            //degree increase to a
+            while (a < degrees) {
+                Arm.updatePower(0.25)
+                a = (masterArm.sensorCollection.quadraturePosition * 360 ) / 4096
+            }
+        } else if (a > degrees) {
+            while (a > degrees) {
+                Arm.updatePower(-0.25)
+                a = (masterArm.sensorCollection.quadraturePosition * 360 ) / 4096
+            }
         }
-        return degrees
     }
 
     fun updatePower(input: Double) {
