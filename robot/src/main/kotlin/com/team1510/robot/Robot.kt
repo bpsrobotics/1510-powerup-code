@@ -17,6 +17,7 @@ class Robot : IterativeRobot() {
     override fun robotInit() {
         Intake.intakeRetract()
         Arm.updatePower(0.0)
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
     override fun autonomousInit() {
