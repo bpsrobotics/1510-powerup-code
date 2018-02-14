@@ -45,6 +45,8 @@ class Teleop : Command() {
 
         if(OI.manipB) Intake.intakeRetract()
 
+
+
         Arm.updatePower(OI.manipRightY)
 
         
