@@ -41,18 +41,18 @@ object Arm : Subsystem(50.0, "Arm") {
 
 //Enter a degree so the arm can turn to
     fun moveToPos(angle:Double) {
-        /*var a = (masterArm.getSelectedSensorPosition(/*sensor ID*/) * 360 ) / 4096
+        /*var a = (masterArm.getSelectedSensorPosition() * 360 ) / 4096
         if (a < degrees) {
             while (a < degrees) {
                 Arm.updatePower(0.25)
-                a = (masterArm.getSelectedSensorPosition(/*sensor ID*/) * 360 ) / 4096
+                a = (masterArm.getSelectedSensorPosition() * 360 ) / 4096
                 masterArm.setPositionControl()
 
             }
         } else if (a > degrees) {
             while (a > degrees) {
                 Arm.updatePower(-0.25)
-                a = (masterArm.getSelectedSensorPosition(/*sensor ID*/) * 360 ) / 4096
+                a = (masterArm.getSelectedSensorPosition() * 360 ) / 4096
             }
         }*/
     targetPos = Rotation2d.createFromDegrees(angle)
