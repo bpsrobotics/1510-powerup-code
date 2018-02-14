@@ -3,6 +3,7 @@ package com.team1510.robot.subsystems
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
+import com.team2898.engine.kinematics.Rotation2d
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
 
@@ -11,6 +12,11 @@ object Arm : Subsystem(50.0, "Arm") {
 
     val masterArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
     val slaveArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
+    var targetPos = Rotation2d(0.0, 0.0)
+        set(value) {
+            field = value
+            masterArm.setPositionControl(targetPos.degrees)
+        }
 
     init {
 
@@ -29,21 +35,27 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.configVelocityMeasurementWindow(32, 0)
 
         masterArm.setPID(0.0, 0.0, 0.0, 0.0)
+        targetPos = Rotation2d(1.0, 0.0)
     }
+
+
 //Enter a degree so the arm can turn to
-    fun moveToPos(degrees:Int) {
-        var a = (masterArm.getSelectedSensorPosition(/*sensor ID*/) * 360 ) / 4096
+    fun moveToPos(angle:Double) {
+        /*var a = (masterArm.getSelectedSensorPosition(/*sensor ID*/) * 360 ) / 4096
         if (a < degrees) {
             while (a < degrees) {
                 Arm.updatePower(0.25)
                 a = (masterArm.getSelectedSensorPosition(/*sensor ID*/) * 360 ) / 4096
+                masterArm.setPositionControl()
+
             }
         } else if (a > degrees) {
             while (a > degrees) {
                 Arm.updatePower(-0.25)
                 a = (masterArm.getSelectedSensorPosition(/*sensor ID*/) * 360 ) / 4096
             }
-        }
+        }*/
+    targetPos = Rotation2d.createFromDegrees(angle)
     }
 
     fun updatePower(input: Double) {
