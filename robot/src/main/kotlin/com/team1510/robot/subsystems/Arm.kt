@@ -12,6 +12,7 @@ object Arm : Subsystem(50.0, "Arm") {
 
     val masterArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
     val slaveArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
+
     var targetPos = Rotation2d(0.0, 0.0)
         set(value) {
             field = value
@@ -38,25 +39,12 @@ object Arm : Subsystem(50.0, "Arm") {
         targetPos = Rotation2d(1.0, 0.0)
     }
 
-
-//Enter a degree so the arm can turn to
+    //Enter a degree so the arm can turn to
     fun moveToPos(angle:Double) {
-        /*var a = (masterArm.getSelectedSensorPosition() * 360 ) / 4096
-        if (a < degrees) {
-            while (a < degrees) {
-                Arm.updatePower(0.25)
-                a = (masterArm.getSelectedSensorPosition() * 360 ) / 4096
-                masterArm.setPositionControl()
 
-            }
-        } else if (a > degrees) {
-            while (a > degrees) {
-                Arm.updatePower(-0.25)
-                a = (masterArm.getSelectedSensorPosition() * 360 ) / 4096
-            }
-        }*/
-    targetPos = Rotation2d.createFromDegrees(angle)
-    }
+        targetPos = Rotation2d.createFromDegrees(angle)
+
+}
 
     fun updatePower(input: Double) {
         masterArm.set(input)
