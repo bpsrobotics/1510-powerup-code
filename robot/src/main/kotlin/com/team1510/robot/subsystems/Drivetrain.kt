@@ -44,7 +44,6 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     {
         leftMaster.set(input.left)
         rightMaster.set(-input.right)
-
        // println("$input")
     }
 
@@ -59,6 +58,11 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
 
     val rightEncVelocity
         get() = rightMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
+
+    fun moveDistance(inches: Double)
+    {
+        masters {setPositionControl(inches * IN_TO_ENC)}
+    }
 
     fun resetEncoders()
     {
