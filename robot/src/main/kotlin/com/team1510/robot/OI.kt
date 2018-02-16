@@ -76,6 +76,11 @@ object OI {
         //a button
     val manipB
         get() = manipController.getRawButton(2)
+    val manipX
+        get() = manipController.getRawButton(3)
+    //a button
+    val manipY
+        get() = manipController.getRawButton(4)
         //b button
     val manipRightY
             get() = deadzone(manipController.getRawAxis(5))/4
