@@ -6,7 +6,7 @@ import com.team1510.robot.config.*
 import com.team2898.engine.kinematics.Rotation2d
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
-
+/*
 object Arm : Subsystem(50.0, "Arm") {
 
 
@@ -62,6 +62,4 @@ object Arm : Subsystem(50.0, "Arm") {
         return false
     }
 
-    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
-
-}
+    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO) */

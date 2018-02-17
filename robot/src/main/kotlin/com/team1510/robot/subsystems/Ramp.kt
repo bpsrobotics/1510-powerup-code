@@ -1,5 +1,6 @@
 package com.team1510.robot.subsystems
 
+/*
 import com.team2898.engine.logic.*
 import main.kotlin.com.team1510.robot.config.*
 import edu.wpi.first.wpilibj.DoubleSolenoid
@@ -71,4 +72,4 @@ object Ramp : Subsystem(50.0, "Ramp"){
     override val enableTimes: List<GamePeriods>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-}
+}*/

@@ -6,7 +6,7 @@ import com.team1510.robot.OI
 import com.team1510.robot.subsystems.Drivetrain
 import com.team2898.engine.async.AsyncLooper
 import com.ctre.phoenix.motorcontrol.ControlMode
-import com.team1510.robot.subsystems.Arm
+//import com.team1510.robot.subsystems.Arm
 import com.team1510.robot.subsystems.Intake
 
 
@@ -45,11 +45,11 @@ class Teleop : Command() {
 
         if(OI.manipB) Intake.intakeRetract()
 
-        if(OI.manipX) Arm.moveToPos(180.0)
+        //if(OI.manipX) Arm.moveToPos(180.0)
 
-        if(OI.manipY) Arm.moveToPos(0.0)
+        //if(OI.manipY) Arm.moveToPos(0.0)
 
-        Arm.updatePower(OI.manipRightY)
+        //Arm.updatePower(OI.manipRightY)
 
         
         //val targetVelocity = OI.throttle * 4096 * 500.0 / 600
