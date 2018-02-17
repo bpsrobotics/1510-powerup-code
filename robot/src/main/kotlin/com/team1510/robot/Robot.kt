@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler
 import com.team1510.robot.commands.Teleop
 import com.team1510.robot.subsystems.Arm
 import com.team1510.robot.subsystems.Intake
+import edu.wpi.first.wpilibj.CameraServer
 import edu.wpi.first.wpilibj.networktables.NetworkTable as nt
 
 class Robot : IterativeRobot() {
@@ -17,6 +18,7 @@ class Robot : IterativeRobot() {
     override fun robotInit() {
         Intake.intakeRetract()
         Arm.updatePower(0.0)
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
     override fun autonomousInit() {
