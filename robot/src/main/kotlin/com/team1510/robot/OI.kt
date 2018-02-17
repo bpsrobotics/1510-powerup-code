@@ -13,12 +13,13 @@ object OI {
     fun convertVelocity (input: Double): Double {
         return input * 4096 * 500.0 / 600
     }
+
+    //Initiate controllers
     val driverController: Joystick = Joystick(0)
     val manipController: Joystick = Joystick(1)
 
-    val intakeExtend: Boolean
-        get() = manipController.getRawAxis(2) != 0.0
 
+    //Begin driver controls
     val throttle
         get() = deadzone(driverController.getRawAxis(1))
         //up and down on the left joystick
@@ -37,24 +38,52 @@ object OI {
         get() = driverController.getRawAxis(3)
 
     val leftBumper
-        get() = driverController.getRawButton(5)
+        get() = manipController.getRawButton(5)
 
     val rightBumper
-        get() = driverController.getRawButton(6)
+        get() = manipController.getRawButton(6)
 
     val aButton
-        get() = driverController.getRawButton(1)
+        get() = manipController.getRawButton(1)
 
     val bButton
-        get() = driverController.getRawButton(2)
+        get() = manipController.getRawButton(2)
 
     val xButton
-        get() = driverController.getRawButton(3)
+        get() = manipController.getRawButton(3)
 
     val yButton
-        get() = driverController.getRawButton(4)
+        get() = manipController.getRawButton(4)
 
-    val deployRamp
+    val driverDeployRamp
         get() = driverController.getRawButton(7)
+        
+    //Begin operator controls
+    val     intake:Boolean
+        get() = deadzone(manipController.getRawAxis(2)) > 0
+
+    val outtake:Boolean
+        get() = deadzone(manipController.getRawAxis(3)) > 0
+
+    val manipA
+        get() = manipController.getRawButton(1)
+        //a button manipulator
+    val manipB
+        get() = manipController.getRawButton(2)
+        //b button manipulator
+    val manipPOV
+        get() = manipController.getRawAxis(6)
+        //POV
+    val manipX
+        get() = manipController.getRawButton(3)
+        //x button manipulator
+    val manipY
+        get() = manipController.getRawButton(4)
+        //y button manipulator
+    val manipRightY
+            get() = deadzone(manipController.getRawAxis(5))
+            //up and down on the left joystick
+    val manipDeployRamp
+        get() = manipController.getRawButton(7)
 
 }
