@@ -13,7 +13,7 @@ class Autonomous : Command() {
 
     override fun execute() {
         //If robot is in the middle
-        if(Drivetrain.gameInfo.length >0) {
+        /*if(Drivetrain.gameInfo.length >0) {
             if(Drivetrain.gameInfo.get(0) == 'L') {
                 Drivetrain.moveDistance(100.0, 100.0)
                 Drivetrain.moveDistance(-50.0, 50.0)
@@ -24,7 +24,9 @@ class Autonomous : Command() {
                 Intake.intakeExtend()
 
             }
-        }
+        }*/
+
+        Drivetrain.moveDistance(40.0 , -40.0)
     }
 
     override fun isFinished(): Boolean {

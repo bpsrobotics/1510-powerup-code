@@ -37,11 +37,6 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
         }
     }
 
-    fun setVelocityControl()
-    {
-        masters {setVelocityControl()}
-    }
-
     fun updatePIDDrive(input: DriveSignal)
     {
         val targetVelocity_left_UnitsPer100ms =  input.left * 4096 * 560.0 / 600;
@@ -69,12 +64,21 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     val rightEncVelocity
         get() = rightMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
 
-    fun moveDistance(Left: Double, Right: Double)
+    fun moveDistance(left: Double, right: Double)
     {
-        leftMaster.setPositionControl(Left * IN_TO_ENC)
-        rightMaster.setPositionControl(Right * IN_TO_ENC)
+        resetEncoders()
+        leftMaster.setPositionControl(left * IN_TO_ENC)
+        rightMaster.setPositionControl(-right * IN_TO_ENC)
     }
 
+    fun turn(degrees: Double) //degrees measured clockwise from front
+    {
+        val leftDistance: Double = degrees /45 * 20 //Change this to the more accurate function later if we don't switch to motion profile
+        val rightDistance: Double = -degrees /45 * 20
+
+        moveDistance(leftDistance, rightDistance)
+
+    }
     fun resetEncoders()
     {
         leftMaster.sensorCollection.setQuadraturePosition(0, 10)
