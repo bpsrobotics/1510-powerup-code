@@ -8,6 +8,7 @@ import com.team2898.engine.async.AsyncLooper
 import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team1510.robot.subsystems.Arm
 import com.team1510.robot.subsystems.Intake
+import com.team1510.robot.subsystems.Ramp
 
 
 class Teleop : Command() {
@@ -22,7 +23,6 @@ class Teleop : Command() {
             println("Arm input ${OI.manipRightY}")
             //if(OI.intake) println("Intaking")
             //if(OI.outtake) println("Releasing")
-
         }.start()
     }
 
@@ -38,7 +38,9 @@ class Teleop : Command() {
         )
 
 
-        Intake.updateIntake(OI.intake, OI.outtake)
+        Intake.updateRightIntake(OI.manipRightTrigger, OI.manipRightBumper)
+        Intake.updateLeftIntake(OI.manipLeftTrigger, OI.manipLeftBumper)
+
         //println("${OI.intake}, ${OI.outtake}")
 
         if(OI.manipA) Intake.intakeExtend()
@@ -51,7 +53,15 @@ class Teleop : Command() {
 
         Arm.updatePower(OI.manipRightY)
 
-        
+
+        /*if(OI.manipDeployRamp) {
+            Ramp.releaseLock()
+            if(OI.manipDeployRamp) {
+                Ramp.extendBoth()
+            }
+        }*/
+
+
         //val targetVelocity = OI.throttle * 4096 * 500.0 / 600
         /* 1500 RPM in either direction */
         //Drivetrain.rightMaster.set(ControlMode.Velocity, targetVelocity)
