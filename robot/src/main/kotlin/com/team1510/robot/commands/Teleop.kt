@@ -9,7 +9,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team1510.robot.subsystems.Arm
 import com.team1510.robot.subsystems.Intake
 import com.team1510.robot.subsystems.Ramp
-
+import com.team2898.engine.kinematics.Rotation2d
+import edu.wpi.first.wpilibj.DriverStation
 
 class Teleop : Command() {
 
@@ -51,9 +52,9 @@ class Teleop : Command() {
 
         if(OI.manipY) Ramp.extendLeft()
 
+        //Arm.updatePower(OI.manipRightY)
 
-        Arm.updatePower(OI.manipRightY)
-
+        Arm.targetPos = Rotation2d( OI.manipRightY , Math.sqrt(1 - (Math.pow(OI.manipRightY, 2.0))))
 
         /*if(OI.manipDeployRamp) {
             Ramp.releaseLock()

@@ -18,19 +18,13 @@ object Arm : Subsystem(50.0, "Arm") {
     val speedRamp = VelocityRamp(accelRate = 2.0, deaccelRate = 2.0)
 
     var targetPos = Rotation2d(1.0, 0.0)
-        set(pose) {
-            speedRamp.setSetpoint(pose.radians)
-            field = pose
+        set(value) {
+            masterArm.setPositionControl(
+                    poseToEncoderUnits(
+                            targetPos
+                    )
+            )
         }
-
-    override val loop = AsyncLooper(hz = 100.0) {
-        masterArm.setPositionControl(
-                poseToEncoderAngle(
-                        targetPos
-                )
-        )
-
-    }
 
     init {
 
@@ -46,21 +40,21 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.enableCurrentLimit(true)
 
         masterArm.setPID(0.0, 0.0, 0.0, 0.0)
-        targetPos = Rotation2d(1.0, 0.0)
+        masterArm.sensorCollection.setQuadraturePosition(0, 0)
     }
 
-    //Enter a degree so the arm can turn to
+    /*Enter a degree so the arm can turn to
     fun moveToPos(angle:Double) {
         targetPos = Rotation2d.createFromDegrees(angle)
-    }
+    }*/
 
     fun updatePower(input: Double) {
         masterArm.set(input)
     }
 
-    fun poseToEncoderAngle(pose: Rotation2d): Double {
+    fun poseToEncoderUnits(pose: Rotation2d): Double {
 
-        return pose.radians / (2 * Math.PI)
+        return pose.radians / (2 * Math.PI)  * 4096 //Convert to native encoder units
     }
 
     override fun onStart() {}
