@@ -3,9 +3,11 @@ package com.team1510.robot.subsystems
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
+import com.team2898.engine.async.AsyncLooper
 import com.team2898.engine.kinematics.Rotation2d
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
+import com.team2898.engine.motion.VelocityRamp
 
 object Arm : Subsystem(50.0, "Arm") {
 
@@ -13,11 +15,22 @@ object Arm : Subsystem(50.0, "Arm") {
     val masterArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
     val slaveArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
 
-    var targetPos = Rotation2d(0.0, 0.0)
-        set(value) {
-            field = value
-            masterArm.setPositionControl(targetPos.degrees)
+    val speedRamp = VelocityRamp(accelRate = 2.0, deaccelRate = 2.0)
+
+    var targetPos = Rotation2d(1.0, 0.0)
+        set(pose) {
+            speedRamp.setSetpoint(pose.radians)
+            field = pose
         }
+
+    override val loop = AsyncLooper(hz = 100.0) {
+        masterArm.setPositionControl(
+                poseToEncoderAngle(
+                        targetPos
+                )
+        )
+
+    }
 
     init {
 
@@ -32,22 +45,22 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.configPeakCurrentDuration(PEAK_MAX_AMPS_DUR_MS, 0)
         masterArm.enableCurrentLimit(true)
 
-        masterArm.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms, 0)
-        masterArm.configVelocityMeasurementWindow(32, 0)
-
         masterArm.setPID(0.0, 0.0, 0.0, 0.0)
         targetPos = Rotation2d(1.0, 0.0)
     }
 
     //Enter a degree so the arm can turn to
     fun moveToPos(angle:Double) {
-
         targetPos = Rotation2d.createFromDegrees(angle)
-
-}
+    }
 
     fun updatePower(input: Double) {
         masterArm.set(input)
+    }
+
+    fun poseToEncoderAngle(pose: Rotation2d): Double {
+
+        return pose.radians / (2 * Math.PI)
     }
 
     override fun onStart() {}
