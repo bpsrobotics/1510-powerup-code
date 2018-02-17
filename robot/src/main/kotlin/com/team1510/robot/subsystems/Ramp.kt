@@ -1,9 +1,8 @@
 package com.team1510.robot.subsystems
 
-import com.team1510.robot.config.*
 import com.team2898.engine.logic.*
+import com.team1510.robot.config.*
 import edu.wpi.first.wpilibj.DoubleSolenoid
-
 
 object Ramp : Subsystem(50.0, "Ramp"){
 
@@ -30,6 +29,7 @@ object Ramp : Subsystem(50.0, "Ramp"){
     }
 
     /*
+
     fun extendBoth(){
         rightRamp.set(DoubleSolenoid.Value.kForward)
         leftRamp.set(DoubleSolenoid.Value.kForward)
@@ -55,29 +55,23 @@ object Ramp : Subsystem(50.0, "Ramp"){
     fun releaseLock(){
         rightRampLock.set(DoubleSolenoid.Value.kReverse)
         leftRampLock.set(DoubleSolenoid.Value.kReverse)
+
     }*/
 
-   override fun onStart() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onStart() {}
 
-    override fun onLoop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onLoop() {}
 
-    override fun onStop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onStop() {}
 
     override fun selfCheckup(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return false
     }
 
     override fun selfTest(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return false
     }
 
-    override val enableTimes: List<GamePeriods>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
+    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
 }
+

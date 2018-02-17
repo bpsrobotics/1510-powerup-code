@@ -73,9 +73,10 @@ object OI {
 
     val manipA
         get() = manipController.getRawButton(1)
-        //a button
+        //a button manipulator
     val manipB
         get() = manipController.getRawButton(2)
+
     val manipX
         get() = manipController.getRawButton(3)
     //a button

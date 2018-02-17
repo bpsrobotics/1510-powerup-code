@@ -23,7 +23,6 @@ class Teleop : Command() {
             println("X:  ${OI.manipX} Y: ${OI.manipY}")
             //if(OI.intake) println("Intaking")
             //if(OI.outtake) println("Releasing")
-
         }.start()
     }
 
@@ -52,9 +51,18 @@ class Teleop : Command() {
 
         if(OI.manipY) Ramp.extendLeft()
 
+
         Arm.updatePower(OI.manipRightY)
 
-        
+
+        /*if(OI.manipDeployRamp) {
+            Ramp.releaseLock()
+            if(OI.manipDeployRamp) {
+                Ramp.extendBoth()
+            }
+        }*/
+
+
         //val targetVelocity = OI.throttle * 4096 * 500.0 / 600
         /* 1500 RPM in either direction */
         //Drivetrain.rightMaster.set(ControlMode.Velocity, targetVelocity)
