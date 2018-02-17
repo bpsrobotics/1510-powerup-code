@@ -1,10 +1,11 @@
 package com.team1510.robot.subsystems
-/*
+
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
+import edu.wpi.first.wpilibj.DriverStation
 
 object Drivetrain : Subsystem(50.0, "Drivetrain") {
 
@@ -13,7 +14,7 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     val leftSlave = TalonWrapper(LEFT_SLAVE_CANID)
     val rightSlave = TalonWrapper(RIGHT_SLAVE_CANID)
     val masterList = listOf(leftMaster, rightMaster)
-
+    var gameInfo:String = DriverStation.getInstance().gameSpecificMessage
     init {
         leftSlave slaveTo leftMaster
         rightSlave slaveTo rightMaster
@@ -59,9 +60,10 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     val rightEncVelocity
         get() = rightMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
 
-    fun moveDistance(inches: Double)
+    fun moveDistance(Left: Double, Right: Double)
     {
-        masters {setPositionControl(inches * IN_TO_ENC)}
+        leftMaster.setPositionControl(Left * IN_TO_ENC)
+        rightMaster.setPositionControl(Right * IN_TO_ENC)
     }
 
     fun resetEncoders()
@@ -95,5 +97,3 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
 
 
 }
-
-*/

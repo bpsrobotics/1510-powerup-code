@@ -41,9 +41,7 @@ object Arm : Subsystem(50.0, "Arm") {
 
     //Enter a degree so the arm can turn to
     fun moveToPos(angle:Double) {
-
         targetPos = Rotation2d.createFromDegrees(angle)
-
 }
 
     fun updatePower(input: Double) {
