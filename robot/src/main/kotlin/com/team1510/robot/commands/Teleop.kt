@@ -28,7 +28,7 @@ class Teleop : Command() {
 
     override fun execute() {
         CheesyDrive.updateQuickTurn(OI.quickTurn)
-        Drivetrain.updateDrive(
+        Drivetrain.updatePIDDrive(
                 CheesyDrive.updateCheesy(
                         (if (!OI.quickTurn) OI.turn else -OI.leftTrigger + OI.rightTrigger),
                         -OI.throttle,

@@ -1,5 +1,6 @@
 package com.team1510.robot.subsystems
 
+import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
@@ -32,13 +33,21 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
             configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms, 0)
             configVelocityMeasurementWindow(32, 0)
 
-            setPID(Kp, Ki, Kd, Kf)
+            setPID(Kp, Ki, Kd, .28)
         }
     }
 
     fun setVelocityControl()
     {
         masters {setVelocityControl()}
+    }
+
+    fun updatePIDDrive(input: DriveSignal)
+    {
+        val targetVelocity_left_UnitsPer100ms =  input.left * 4096 * 560.0 / 600;
+        val targetVelocity_right_UnitsPer100ms = -input.right * 4096 * 560.0 / 600;
+        leftMaster.set(ControlMode.Velocity, targetVelocity_left_UnitsPer100ms)
+        rightMaster.set(ControlMode.Velocity, targetVelocity_right_UnitsPer100ms)
     }
 
     fun updateDrive(input: DriveSignal)
