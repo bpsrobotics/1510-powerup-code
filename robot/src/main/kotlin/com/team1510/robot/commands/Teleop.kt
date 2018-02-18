@@ -16,12 +16,16 @@ class Teleop : Command() {
 
     override fun initialize() {
         Drivetrain.resetEncoders()
+        Arm.resetEncoders()
+        //Ramp.lockRamps()
+        //Ramp.retractRamps()
         //Drivetrain.setVelocityControl()
         AsyncLooper(1.0) {
             //println("Position ${Drivetrain.leftEncPostion} , ${Drivetrain.rightEncPosition}")
             //println("Velocity ${Drivetrain.leftEncVelocity} , ${Drivetrain.rightEncVelocity}")
             //println("Error ${Drivetrain.rightMaster.getClosedLoopError(0)}")
-            println("X:  ${OI.manipX} Y: ${OI.manipY}")
+            //println("X:  ${OI.manipX} Y: ${OI.manipY}")
+            println("Arm Position: ${Arm.masterArm.sensorCollection.quadraturePosition}")
             //if(OI.intake) println("Intaking")
             //if(OI.outtake) println("Releasing")
         }.start()
@@ -44,17 +48,21 @@ class Teleop : Command() {
 
         //println("${OI.intake}, ${OI.outtake}")
 
-        if(OI.manipA) Intake.intakeExtend()
+        //if(OI.manipA) Intake.intakeExtend()
 
-        if(OI.manipB) Intake.intakeRetract()
+        //(OI.manipB) Intake.intakeRetract()
 
-        if(OI.manipX) Ramp.releaseLeftLock()
+        if(OI.manipA) Ramp.lockRamps()
 
-        if(OI.manipY) Ramp.extendLeft()
+        if(OI.manipB) Ramp.releaseLock()
 
-        //Arm.updatePower(OI.manipRightY)
+        if(OI.manipX) Ramp.retractRamps()
 
-        Arm.targetPos = Rotation2d( OI.manipRightY , Math.sqrt(1 - (Math.pow(OI.manipRightY, 2.0))))
+        if(OI.manipY) Ramp.deployRamps()
+
+        Arm.updatePower(OI.manipRightY)
+
+        //Arm.targetPos = Rotation2d( OI.manipRightY , Math.sqrt(1 - (Math.pow(OI.manipRightY, 2.0))))
 
         /*if(OI.manipDeployRamp) {
             Ramp.releaseLock()

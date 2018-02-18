@@ -52,6 +52,9 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.set(input)
     }
 
+    fun resetEncoders(){
+        masterArm.sensorCollection.setQuadraturePosition(0, 0)
+    }
     fun poseToEncoderUnits(pose: Rotation2d): Double {
 
         return pose.radians / (2 * Math.PI)  * 4096 //Convert to native encoder units

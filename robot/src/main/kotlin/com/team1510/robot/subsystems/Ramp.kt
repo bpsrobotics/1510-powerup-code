@@ -6,13 +6,28 @@ import edu.wpi.first.wpilibj.DoubleSolenoid
 
 object Ramp : Subsystem(50.0, "Ramp"){
 
-    val rightRamp = DoubleSolenoid(RIGHT_RAMP_SOL_FWD_ID, RIGHT_RAMP_SOL_REV_ID)
-    val leftRamp = DoubleSolenoid(LEFT_RAMP_SOL_FWD_ID, LEFT_RAMP_SOL_REV_ID)
+    val rampLocks = DoubleSolenoid(RAMP_LOCK_SOL_FWD_ID, RAMP_LOCK_SOL_REV_ID)
+    val ramps = DoubleSolenoid(RAMP_DEPLOY_SOL_FWD_ID, RAMP_DEPLOY_SOL_REV_ID)
 
     //val rightRampLock = DoubleSolenoid(RIGHT_LOCK_SOL_FWD_ID, RIGHT_LOCK_SOL_REV_ID)
     //val leftRampLock = DoubleSolenoid(LEFT_LOCK_SOL_FWD_ID, LEFT_LOCK_SOL_REV_ID)
 
-    fun releaseRightLock() {
+    fun releaseLock() {
+        rampLocks.set(DoubleSolenoid.Value.kForward)
+    }
+
+    fun lockRamps() {
+        rampLocks.set(DoubleSolenoid.Value.kReverse)
+    }
+
+    fun deployRamps() {
+        ramps.set(DoubleSolenoid.Value.kReverse)
+    }
+
+    fun retractRamps() {
+        ramps.set(DoubleSolenoid.Value.kForward)
+    }
+    /*fun releaseRightLock() {
         rightRamp.set(DoubleSolenoid.Value.kReverse)
     }
 
@@ -27,6 +42,7 @@ object Ramp : Subsystem(50.0, "Ramp"){
     fun extendLeft() {
         leftRamp.set(DoubleSolenoid.Value.kForward)
     }
+    */
 
     /*
 
