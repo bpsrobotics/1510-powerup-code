@@ -21,8 +21,8 @@ const val RAMP_DEPLOY_SOL_REV_ID: Int = 1
 //const val LEFT_LOCK_SOL_REV_ID: Int = 8
 
 //Intake:
-const val INTAKE_SOL_FWD_ID: Int = 2
-const val INTAKE_SOL_REV_ID: Int = 3
+const val INTAKE_SOL_FWD_ID: Int = 3
+const val INTAKE_SOL_REV_ID: Int = 2
 
 const val LEFT_INTAKE_SOL_FWD_ID: Int = 11
 const val LEFT_INTAKE_SOL_REV_ID: Int = 12

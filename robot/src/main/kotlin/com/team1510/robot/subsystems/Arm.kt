@@ -1,5 +1,6 @@
 package com.team1510.robot.subsystems
 
+import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
@@ -12,17 +13,15 @@ import com.team2898.engine.motion.VelocityRamp
 object Arm : Subsystem(50.0, "Arm") {
 
 
-    val masterArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
-    val slaveArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
+    val masterArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
+    val slaveArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
 
     val speedRamp = VelocityRamp(accelRate = 2.0, deaccelRate = 2.0)
 
-    var targetPos = Rotation2d(1.0, 0.0)
+    var targetPos = 0.0
         set(value) {
             masterArm.setPositionControl(
-                    poseToEncoderUnits(
-                            targetPos
-                    )
+                    value
             )
         }
 
@@ -40,7 +39,7 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.enableCurrentLimit(true)
 
         masterArm.setPID(0.0, 0.0, 0.0, 0.0)
-        masterArm.sensorCollection.setQuadraturePosition(0, 0)
+
     }
 
     /*Enter a degree so the arm can turn to
@@ -60,6 +59,10 @@ object Arm : Subsystem(50.0, "Arm") {
         return pose.radians / (2 * Math.PI)  * 4096 //Convert to native encoder units
     }
 
+    fun moveTo(input:Double)
+    {
+        Arm.masterArm.set(ControlMode.Position, input * 4096 / 2)
+    }
     override fun onStart() {}
 
     override fun onLoop() {}

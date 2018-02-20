@@ -13,19 +13,19 @@ object Ramp : Subsystem(50.0, "Ramp"){
     //val leftRampLock = DoubleSolenoid(LEFT_LOCK_SOL_FWD_ID, LEFT_LOCK_SOL_REV_ID)
 
     fun releaseLock() {
-        rampLocks.set(DoubleSolenoid.Value.kForward)
-    }
-
-    fun lockRamps() {
         rampLocks.set(DoubleSolenoid.Value.kReverse)
     }
 
+    fun lockRamps() {
+        rampLocks.set(DoubleSolenoid.Value.kForward)
+    }
+
     fun deployRamps() {
-        ramps.set(DoubleSolenoid.Value.kReverse)
+        ramps.set(DoubleSolenoid.Value.kForward)
     }
 
     fun retractRamps() {
-        ramps.set(DoubleSolenoid.Value.kForward)
+        ramps.set(DoubleSolenoid.Value.kReverse)
     }
     /*fun releaseRightLock() {
         rightRamp.set(DoubleSolenoid.Value.kReverse)
