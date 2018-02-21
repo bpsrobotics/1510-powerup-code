@@ -64,7 +64,7 @@ class Teleop : Command() {
 
         //Arm.updatePower(OI.manipRightY)
 
-        Arm.moveTo(OI.manipRightY)
+        Arm.masterArm.setPositionControl(OI.manipRightY*2000)
         //Arm.targetPos = OI.manipRightY * 1000
 
         /*if(OI.manipDeployRamp) {
