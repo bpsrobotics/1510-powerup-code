@@ -7,7 +7,7 @@ import com.team1510.robot.subsystems.Drivetrain
 import com.team2898.engine.async.AsyncLooper
 import com.ctre.phoenix.motorcontrol.ControlMode
 //import com.team1510.robot.subsystems.Arm
-import com.team1510.robot.subsystems.Intake
+//import com.team1510.robot.subsystems.Intake
 
 
 class Teleop : Command() {
@@ -38,12 +38,12 @@ class Teleop : Command() {
         )
 
 
-        Intake.updateIntake(OI.intake, OI.outtake)
+        //Intake.updateIntake(OI.intake, OI.outtake)
         //println("${OI.intake}, ${OI.outtake}")
 
-        if(OI.manipA) Intake.intakeExtend()
+        //if(OI.manipA) Intake.intakeExtend()
 
-        if(OI.manipB) Intake.intakeRetract()
+        //if(OI.manipB) Intake.intakeRetract()
 
         //if(OI.manipX) Arm.moveToPos(180.0)
 

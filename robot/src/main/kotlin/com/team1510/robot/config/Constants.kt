@@ -7,7 +7,7 @@ const val outtakeSpeed: Double = -1.0;
 //Units
 
 const val ENC_TO_IN = 18.850 / 4096 //Multiply native units by circumference of wheel (18.850) and divide by units per rotation (4096)
-const val IN_TO_ENC:Double = 4096 / 18.850 / 3
+const val IN_TO_ENC = 4096 / 19.5
 //Drive:
 const val Kp = 0.0
 const val Ki = 0.0

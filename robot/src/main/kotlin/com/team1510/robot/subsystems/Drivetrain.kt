@@ -53,10 +53,10 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     }
 
     val leftEncPostion
-        get() = leftMaster.sensorCollection.quadraturePosition.toDouble() * ENC_TO_IN
+        get() = leftMaster.sensorCollection.quadraturePosition.toDouble() //* ENC_TO_IN
 
     val rightEncPosition
-        get() = rightMaster.sensorCollection.quadraturePosition.toDouble() * ENC_TO_IN
+        get() = rightMaster.sensorCollection.quadraturePosition.toDouble() //* ENC_TO_IN
 
     val leftEncVelocity
         get() = leftMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
@@ -64,8 +64,7 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     val rightEncVelocity
         get() = rightMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
 
-    fun moveDistance(left: Double, right: Double)
-    {
+    fun moveDistance(left: Double, right: Double) {
         resetEncoders()
         leftMaster.setPositionControl(left * IN_TO_ENC)
         rightMaster.setPositionControl(-right * IN_TO_ENC)
@@ -81,8 +80,8 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     }
     fun resetEncoders()
     {
-        leftMaster.sensorCollection.setQuadraturePosition(0, 10)
-        rightMaster.sensorCollection.setQuadraturePosition(0, 10)
+        leftMaster.sensorCollection.setQuadraturePosition(0, 0)
+        rightMaster.sensorCollection.setQuadraturePosition(0, 0)
     }
 
 
