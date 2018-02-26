@@ -13,7 +13,7 @@ class LeftSwitch : CommandGroup() {
         addSequential(object: WaitCommand(.25){})
         addSequential(AutoDrive(.3,0.0,  5.0))
         addSequential(object: WaitCommand(.25){})
-        addSequential(AutoDrive(.3, .7, 10.0))
+        addSequential(AutoDrive(.3, .7, 11.0))
         addSequential(object: WaitCommand(.25){})
         addSequential(AutoDrive(.3, 0.0,10.0))
     }
