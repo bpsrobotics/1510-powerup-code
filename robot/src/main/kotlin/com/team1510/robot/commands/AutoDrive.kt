@@ -9,47 +9,35 @@ import com.team2898.engine.motion.CheesyDrive
 import com.team2898.engine.motion.DriveSignal
 import edu.wpi.first.wpilibj.command.Command
 
-class AutoDrive(val throttle: Double = 0.0, val distance: Double = 0.0) : Command() {
+open class AutoDrive(val throttle: Double = 0.0, val turn : Double = 0.0, val distance: Double = 0.0) : Command() {
 
     var reqDistance = distance * IN_TO_ENC
-    var isComplete = false
-
     override fun initialize() {
 
         //reqDistance = distance * IN_TO_ENC
         Drivetrain.resetEncoders()
-        println("Required distance: ${reqDistance}")
-        AsyncLooper(10.0) {
-            println((Math.abs(Drivetrain.leftEncPostion) + Math.abs(Drivetrain.rightEncPosition)) / 2.0)
-
-        }.start()
     }
 
     override fun execute() {
+        println("Driving ${((Math.abs(Drivetrain.leftEncPostion) + Math.abs(Drivetrain.rightEncPosition)) / 2.0 > reqDistance)}")
 
-        if((Math.abs(Drivetrain.leftEncPostion) + Math.abs(Drivetrain.rightEncPosition)) / 2.0 > reqDistance)
-        {
-            isComplete = true
-        }
-        else {
-            Drivetrain.updatePIDDrive(
+        Drivetrain.updatePIDDrive(
                     CheesyDrive.updateCheesy(
-                            0.0,
+                            turn,
                             throttle,
                             false,
                             true
                     )
-            )
-        }
+        )
     }
 
     override fun isFinished(): Boolean {
-        return isComplete
+        return ((Math.abs(Drivetrain.leftEncPostion) + Math.abs(Drivetrain.rightEncPosition)) / 2.0 > reqDistance)
     }
 
     override fun end() {
         Drivetrain.updatePIDDrive(DriveSignal(0.0, 0.0))
-        //Drivetrain.resetEncoders()
+        Drivetrain.resetEncoders()
     }
 
 
