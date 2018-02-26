@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup
 class CrossLine : CommandGroup() {
 
     init{
+
         addSequential(AutoDrive(.3,0.0, 40.0))
 
     }
