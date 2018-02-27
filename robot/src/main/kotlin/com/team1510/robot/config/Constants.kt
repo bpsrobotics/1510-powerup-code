@@ -13,6 +13,7 @@ const val Kp = 0.0
 const val Ki = 0.0
 const val Kd = 0.0
 const val Kf = 0.3148 //.3148 1510 bot
+const val TEST_BOT_Kf = .28
 
 const val timeoutMs = 0
 

@@ -17,21 +17,19 @@ class Robot : IterativeRobot() {
 
     val teleopCommand = Teleop()
 
-    //val autoChooser = SendableChooser()
-
-
+    val autoChooser = SendableChooser()
 
     override fun robotInit() {
         //Arm.updatePower(0.0)
         CameraServer.getInstance().startAutomaticCapture(0)
         CameraServer.getInstance().startAutomaticCapture(1)
 
-        /*autoChooser.addDefault("CrossLine", CrossLine())
-        autoChooser.addObject("Center Switch", RightSwitch())
-        autoChooser.addObject("Right Switch", RightSwitch())
-        autoChooser.addObject("Left Switch", RightSwitch())
+        autoChooser().addDefault("CrossLine", CrossLine())
+        autoChooser().addObject("Center Switch", CenterSwitch())
+        autoChooser().addObject("Right Switch", RightSwitch())
+        autoChooser().addObject("Left Switch", LeftSwitch())
 
-        SmartDashboard.putData("Auto Chooser", autoChooser)*/
+        SmartDashboard.putData("Auto Chooser", autoChooser())
     }
 
     override fun autonomousInit() {
@@ -59,3 +57,5 @@ class Robot : IterativeRobot() {
         LoopManager.onDisable()
     }
 }
+
+

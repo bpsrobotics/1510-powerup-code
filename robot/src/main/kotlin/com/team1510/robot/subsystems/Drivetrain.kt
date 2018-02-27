@@ -33,7 +33,7 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
             configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms, 0)
             configVelocityMeasurementWindow(32, 0)
 
-            setPID(Kp, Ki, Kd, .28)
+            setPID(Kp, Ki, Kd, Kf)
         }
     }
 
