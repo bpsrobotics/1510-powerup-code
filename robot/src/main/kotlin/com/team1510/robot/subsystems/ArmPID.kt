@@ -1,5 +1,6 @@
 package com.team1510.robot.subsystems
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
@@ -9,9 +10,15 @@ import com.team2898.engine.kinematics.Rotation2d
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
 import com.team2898.engine.motion.VelocityRamp
+import sun.security.pkcs11.wrapper.Constants
 
-object Arm : Subsystem(50.0, "Arm") {
+object ArmPID : Subsystem(50.0, "ArmPID") {
 
+
+    var _loops = 0;
+    var _lastButton1 = false;
+    /** save the target position to servo to */
+    var targetPositionRotations: Int = 0
 
     val masterArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
     val slaveArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
@@ -29,7 +36,7 @@ object Arm : Subsystem(50.0, "Arm") {
 
         slaveArm slaveTo masterArm
 
-       // masterArm.setPositionControl()
+        // masterArm.setPositionControl()
 
         masterArm.setMagEncoder()
 
@@ -38,7 +45,16 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.configPeakCurrentDuration(PEAK_MAX_AMPS_DUR_MS, 0)
         masterArm.enableCurrentLimit(true)
 
-        masterArm.setPID(0.0, 0.0, 0.0, 0.0)
+        masterArm.setPID(0.5, 0.00, 0.0, 0.0)
+
+        //masterArm.setBrakeMode()
+
+        val absolutePosition:Int = masterArm.sensorCollection.pulseWidthPosition
+
+        /* set the quadrature (relative) sensor to match absolute */
+        masterArm.sensorCollection.setQuadraturePosition(absolutePosition, 10)
+
+        //masterArm.setSelectedSensorPosition(absolutePosition, 2, 10);
 
     }
 
@@ -77,4 +93,6 @@ object Arm : Subsystem(50.0, "Arm") {
         return false
     }
 
-    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO) */
+    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
+
+}

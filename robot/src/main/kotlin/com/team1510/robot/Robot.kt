@@ -1,5 +1,6 @@
 package com.team1510.robot
 
+
 import com.team1510.robot.commands.*
 import com.team2898.engine.logic.LoopManager
 import edu.wpi.first.wpilibj.IterativeRobot
@@ -15,14 +16,16 @@ class Robot : IterativeRobot() {
 
     val autoCommand = Autonomous()
 
-    val teleopCommand = Teleop()
+    val teleopCommand = ArmPIDTest()
 
     val autoChooser = SendableChooser()
 
     override fun robotInit() {
-        //Arm.updatePower(0.0)
-        CameraServer.getInstance().startAutomaticCapture(0)
+        
+        Intake.intakeRetract()
+        Arm.updatePower(0.0)
         CameraServer.getInstance().startAutomaticCapture(1)
+        CameraServer.getInstance().startAutomaticCapture(0)
 
         autoChooser().addDefault("CrossLine", CrossLine())
         autoChooser().addObject("Center Switch", CenterSwitch())

@@ -20,17 +20,27 @@ object Intake: Subsystem(50.0, "Intake"){
     val leftIntakeTalon = Talon(LEFT_INTAKE_PWM_ID)
 
 
-    fun updateIntake(intake: Boolean = false, outtake: Boolean = false){
+    fun updateRightIntake(intake: Boolean = false, outtake: Boolean = false){
         if((!intake && ! outtake) || (intake && outtake)) {
             rightIntakeTalon.set(0.0)
+        }
+        if(intake) {
+            rightIntakeTalon.set(1.0)
+        }
+        if(outtake){
+            rightIntakeTalon.set(-1.0)
+        }
+        //println("Right ${rightIntakeTalon.get()}, Left ${leftIntakeTalon.get()}")
+    }
+
+    fun updateLeftIntake(intake: Boolean = false, outtake: Boolean = false){
+        if((!intake && ! outtake) || (intake && outtake)) {
             leftIntakeTalon.set(0.0)
         }
         if(intake) {
-            rightIntakeTalon.set(0.75)
             leftIntakeTalon.set(0.75)
         }
         if(outtake){
-            rightIntakeTalon.set(-0.75)
             leftIntakeTalon.set(-0.75)
         }
         //println("Right ${rightIntakeTalon.get()}, Left ${leftIntakeTalon.get()}")
