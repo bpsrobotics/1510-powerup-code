@@ -1,10 +1,12 @@
 package com.team1510.robot.subsystems
 
+import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
+import edu.wpi.first.wpilibj.DriverStation
 
 object Drivetrain : Subsystem(50.0, "Drivetrain") {
 
@@ -13,7 +15,7 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     val leftSlave = TalonWrapper(LEFT_SLAVE_CANID)
     val rightSlave = TalonWrapper(RIGHT_SLAVE_CANID)
     val masterList = listOf(leftMaster, rightMaster)
-
+    var gameInfo:String = DriverStation.getInstance().gameSpecificMessage
     init {
         leftSlave slaveTo leftMaster
         rightSlave slaveTo rightMaster
@@ -35,9 +37,12 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
         }
     }
 
-    fun setVelocityControl()
+    fun updatePIDDrive(input: DriveSignal)
     {
-        masters {setVelocityControl()}
+        val targetVelocity_left_UnitsPer100ms =  input.left * 4096 * 560.0 / 600;
+        val targetVelocity_right_UnitsPer100ms = -input.right * 4096 * 560.0 / 600;
+        leftMaster.set(ControlMode.Velocity, targetVelocity_left_UnitsPer100ms)
+        rightMaster.set(ControlMode.Velocity, targetVelocity_right_UnitsPer100ms)
     }
 
     fun updateDrive(input: DriveSignal)
@@ -48,10 +53,10 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     }
 
     val leftEncPostion
-        get() = leftMaster.sensorCollection.quadraturePosition.toDouble() * ENC_TO_IN
+        get() = leftMaster.sensorCollection.quadraturePosition //* ENC_TO_IN
 
     val rightEncPosition
-        get() = rightMaster.sensorCollection.quadraturePosition.toDouble() * ENC_TO_IN
+        get() = rightMaster.sensorCollection.quadraturePosition //* ENC_TO_IN
 
     val leftEncVelocity
         get() = leftMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
@@ -59,15 +64,25 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     val rightEncVelocity
         get() = rightMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
 
-    fun moveDistance(inches: Double)
-    {
-        masters {setPositionControl(inches * IN_TO_ENC)}
+    fun moveDistance(left: Double, right: Double) {
+        resetEncoders()
+        leftMaster.setPositionControl(left * IN_TO_ENC)
+        rightMaster.setPositionControl(-right * IN_TO_ENC)
     }
 
+    fun turn(degrees: Double) //degrees measured clockwise from front
+    {
+        val leftDistance: Double = degrees /45 * 20 //Change this to the more accurate function later if we don't switch to motion profile
+        val rightDistance: Double = -degrees /45 * 20
+
+        moveDistance(leftDistance, rightDistance)
+
+    }
     fun resetEncoders()
     {
-        leftMaster.sensorCollection.setQuadraturePosition(0, 10)
-        rightMaster.sensorCollection.setQuadraturePosition(0, 10)
+        leftMaster.sensorCollection.setQuadraturePosition(0, 0)
+        rightMaster.sensorCollection.setQuadraturePosition(0, 0)
+
     }
 
 

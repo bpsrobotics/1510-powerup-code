@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.PWMTalonSRX
 import edu.wpi.first.wpilibj.Talon
 
+/*
 object Intake: Subsystem(50.0, "Intake"){
 
     // Two Solenoids to extend
@@ -115,4 +116,4 @@ object Intake: Subsystem(50.0, "Intake"){
 
     override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
 
-}
+}*/

@@ -35,7 +35,7 @@ class Teleop : Command() {
 
     override fun execute() {
         CheesyDrive.updateQuickTurn(OI.quickTurn)
-        Drivetrain.updateDrive(
+        Drivetrain.updatePIDDrive(
                 CheesyDrive.updateCheesy(
                         (if (!OI.quickTurn) OI.turn else -OI.leftTrigger + OI.rightTrigger),
                         -OI.throttle,
@@ -50,9 +50,9 @@ class Teleop : Command() {
 
         //println("${OI.intake}, ${OI.outtake}")
 
-        if(OI.manipA) Intake.intakeExtend()
+        //if(OI.manipA) Intake.intakeExtend()
 
-        if(OI.manipB) Intake.intakeRetract()
+        //if(OI.manipB) Intake.intakeRetract()
 
         //if(OI.manipA) Ramp.lockRamps()
 
