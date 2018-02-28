@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.team1510.robot.OI
+import edu.wpi.first.networktables.NetworkTable
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 
 class ArmPIDTest : Command() {
@@ -44,42 +46,43 @@ class ArmPIDTest : Command() {
     override fun execute() {
 
             /* get gamepad axis */
-            var motorOutput = ArmPID.masterArm.getMotorOutputPercent();
+            var motorOutput = ArmPID.masterArm.motorOutputPercent
             /* deadband gamepad */
 
             /* prepare line to print */
-            _sb.append("\tout:");
+            _sb.append("\tout:")
             /* cast to int to remove decimal places */
-            _sb.append((motorOutput * 100).toInt());
-            _sb.append("%"); /* perc */
+            _sb.append((motorOutput * 100).toInt())
+            _sb.append("%") /* perc */
 
-            _sb.append("\tpos:");
-            _sb.append(ArmPID.masterArm.getSelectedSensorPosition(0));
-            _sb.append("u"); /* units */
+            _sb.append("\tpos:")
+            _sb.append(ArmPID.masterArm.getSelectedSensorPosition(0))
+            _sb.append("u") /* units */
 
+            SmartDashboard.putNumber("Encoder Val", ArmPID.masterArm.getSelectedSensorPosition(0).toDouble())
             /* on button1 press enter closed-loop mode on target position */
             if (!_lastButton1 && OI.manipA) {
                 /* Position mode - button just pressed */
 
                 /* 10 Rotations * 4096 u/rev in either direction */
-                targetPositionRotations = OI.manipRightY * 10.0 * 4096;
-                ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations);
+                targetPositionRotations = OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+                ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations)
 
             }
             /* on button2 just straight drive */
             if (OI.manipB) {
                 /* Percent voltage mode */
-                ArmPID.masterArm.set(ControlMode.PercentOutput, OI.manipRightY);
+                ArmPID.masterArm.set(ControlMode.PercentOutput, OI.manipRightY)
             }
             /* if Talon is in position closed-loop, print some more info */
-            if (ArmPID.masterArm.getControlMode() == ControlMode.Position) {
+            if (ArmPID.masterArm.controlMode == ControlMode.Position) {
                 /* append more signals to print when in speed mode. */
                 _sb.append("\terr:");
-                _sb.append(ArmPID.masterArm.getClosedLoopError(0));
+                _sb.append(ArmPID.masterArm.getClosedLoopError(0))
                 _sb.append("u"); /* units */
 
                 _sb.append("\ttrg:");
-                _sb.append(targetPositionRotations);
+                _sb.append(targetPositionRotations)
                 _sb.append("u"); /* units */
             }
             /*
@@ -87,16 +90,16 @@ class ArmPIDTest : Command() {
              * for performance
              */
             if (++_loops >= 10) {
-                _loops = 0;
-                System.out.println(_sb.toString());
+                _loops = 0
+                System.out.println(_sb.toString())
             }
-            _sb.setLength(0);
+            _sb.setLength(0)
             /* save button state for on press detect */
-            _lastButton1 = OI.manipA;
+            _lastButton1 = OI.manipA
 
     }
     override fun isFinished(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return false
     }
 
 

@@ -45,12 +45,14 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
         masterArm.configPeakCurrentDuration(PEAK_MAX_AMPS_DUR_MS, 0)
         masterArm.enableCurrentLimit(true)
 
-        masterArm.setPID(0.1, 0.0, 0.0, 0.0)
+        masterArm.setPID(0.5, 0.00, 0.0, 0.0)
 
-        val absolutePosition: Int = masterArm.sensorCollection.pulseWidthPosition
+        //masterArm.setBrakeMode()
+
+        //val absolutePosition: Int = masterArm.sens    orCollection.pulseWidthPosition.toInt()
 
         /* set the quadrature (relative) sensor to match absolute */
-        masterArm.setSelectedSensorPosition(absolutePosition, 2, 10);
+        //masterArm.setSelectedSensorPosition(absolutePosition, 2, 10);
 
     }
 
