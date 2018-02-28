@@ -49,9 +49,11 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
 
         //masterArm.setBrakeMode()
 
-        //val absolutePosition: Int = masterArm.sens    orCollection.pulseWidthPosition.toInt()
+        val absolutePosition:Int = masterArm.sensorCollection.pulseWidthPosition
 
         /* set the quadrature (relative) sensor to match absolute */
+        masterArm.sensorCollection.setQuadraturePosition(absolutePosition, 10)
+
         //masterArm.setSelectedSensorPosition(absolutePosition, 2, 10);
 
     }
