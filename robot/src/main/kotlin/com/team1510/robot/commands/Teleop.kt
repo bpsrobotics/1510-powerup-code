@@ -3,34 +3,35 @@ package com.team1510.robot.commands
 import com.team2898.engine.motion.CheesyDrive
 import edu.wpi.first.wpilibj.command.Command
 import com.team1510.robot.OI
-import com.team1510.robot.subsystems.Drivetrain
 import com.team2898.engine.async.AsyncLooper
 import com.ctre.phoenix.motorcontrol.ControlMode
-import com.team1510.robot.subsystems.Arm
-import com.team1510.robot.subsystems.Intake
-import com.team1510.robot.subsystems.Ramp
+import com.team1510.robot.subsystems.*
 import com.team2898.engine.kinematics.Rotation2d
+import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.DriverStation
 
 class Teleop : Command() {
 
+    var lastButtonX = false
+    /** save the target position to servo to  */
+    var targetPositionRotations: Double = 0.toDouble()
+
     override fun initialize() {
         Drivetrain.resetEncoders()
-        Arm.resetEncoders()
         Intake.intakeRetract()
         Ramp.lockRamps()
         Ramp.retractRamps()
         //Arm.masterArm.setPositionControl()
         //Drivetrain.setVelocityControl()
-        AsyncLooper(1.0) {
-            //println("Position ${Drivetrain.leftEncPostion} , ${Drivetrain.rightEncPosition}")
-            //println("Velocity ${Drivetrain.leftEncVelocity} , ${Drivetrain.rightEncVelocity}")
-            //println("Error ${Drivetrain.rightMaster.getClosedLoopError(0)}")
-            //println("X:  ${OI.manipX} Y: ${OI.manipY}")
-            println("Arm Position: ${Arm.masterArm.sensorCollection.quadraturePosition.toDouble()}")
-            //if(OI.intake) println("Intaking")
-            //if(OI.outtake) println("Releasing")
-        }.start()
+//        AsyncLooper(1.0) {
+//            //println("Position ${Drivetrain.leftEncPostion} , ${Drivetrain.rightEncPosition}")
+//            //println("Velocity ${Drivetrain.leftEncVelocity} , ${Drivetrain.rightEncVelocity}")
+//            //println("Error ${Drivetrain.rightMaster.getClosedLoopError(0)}")
+//            //println("X:  ${OI.manipX} Y: ${OI.manipY}")
+//            println("Arm Position: ${Arm.masterArm.sensorCollection.quadraturePosition.toDouble()}")
+//            //if(OI.intake) println("Intaking")
+//            //if(OI.outtake) println("Releasing")
+//        }.start()
     }
 
     override fun execute() {
@@ -54,30 +55,26 @@ class Teleop : Command() {
 
         if(OI.manipB) Intake.intakeRetract()
 
-        //if(OI.manipA) Ramp.lockRamps()
+        if (!lastButtonX && OI.manipX) {
+            /* Position mode - button just pressed */
 
-        if(OI.manipX) Ramp.releaseLock()
+            /* 10 Rotations * 4096 u/rev in either direction */
+            targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+            ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations)
 
-        //if(OI.manipX) Ramp.retractRamps()
+        }
+        /* on button2 just straight drive */
+        if (OI.manipY) {
+            /* Percent voltage mode */
+            ArmPID.masterArm.set(ControlMode.PercentOutput, -OI.manipLeftY)
+        }
 
-        if(OI.manipY) Ramp.deployRamps()
+        /* save button state for on press detect */
+        lastButtonX = OI.manipX
 
-        Arm.updatePower(OI.manipRightY)
+        if(OI.manipBack && OI.manipStart) Ramp.releaseLock()
 
-        //Arm.masterArm.setPositionControl(OI.manipRightY*2000)
-        //Arm.targetPos = OI.manipRightY * 1000
-
-        /*if(OI.manipDeployRamp) {
-            Ramp.releaseLock()
-            if(OI.manipDeployRamp) {
-                Ramp.extendBoth()
-            }
-        }*/
-
-
-        //val targetVelocity = OI.throttle * 4096 * 500.0 / 600
-        /* 1500 RPM in either direction */
-        //Drivetrain.rightMaster.set(ControlMode.Velocity, targetVelocity)
+        if(Ramp.isLockReleased && OI.doubleJoystickClick) Ramp.deployRamps()
 
     }
 

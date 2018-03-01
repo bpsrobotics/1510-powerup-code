@@ -9,6 +9,12 @@ object Ramp : Subsystem(50.0, "Ramp"){
     val rampLocks = DoubleSolenoid(RAMP_LOCK_SOL_FWD_ID, RAMP_LOCK_SOL_REV_ID)
     val ramps = DoubleSolenoid(RAMP_DEPLOY_SOL_FWD_ID, RAMP_DEPLOY_SOL_REV_ID)
 
+    val isLockReleased
+        get() = rampLocks.get() == DoubleSolenoid.Value.kReverse
+
+    val isRampExtended
+        get() = ramps.get() == DoubleSolenoid.Value.kForward
+
     //val rightRampLock = DoubleSolenoid(RIGHT_LOCK_SOL_FWD_ID, RIGHT_LOCK_SOL_REV_ID)
     //val leftRampLock = DoubleSolenoid(LEFT_LOCK_SOL_FWD_ID, LEFT_LOCK_SOL_REV_ID)
 
