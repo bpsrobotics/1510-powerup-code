@@ -33,13 +33,13 @@ junitPlatform {
     }
 }
 
-def TEAM = 2898
+def TEAM = 1510
 def ROBOT_CLASS = "com.team1510.robot.Robot"
 
 deploy {
     targets {
         target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
-            addresses << '10.28.98.2'
+            addresses << '10.15.10.2'
             team = TEAM
         }
     }

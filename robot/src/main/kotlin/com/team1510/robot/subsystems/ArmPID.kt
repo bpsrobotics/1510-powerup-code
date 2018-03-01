@@ -11,6 +11,7 @@ import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
 import com.team2898.engine.motion.VelocityRamp
 import sun.security.pkcs11.wrapper.Constants
+import javax.naming.ldap.Control
 
 object ArmPID : Subsystem(50.0, "ArmPID") {
 
@@ -49,7 +50,7 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
 
         //masterArm.setBrakeMode()
 
-        val absolutePosition:Int = masterArm.sensorCollection.pulseWidthPosition
+        val absolutePosition: Int = masterArm.sensorCollection.pulseWidthPosition
 
         /* set the quadrature (relative) sensor to match absolute */
         masterArm.sensorCollection.setQuadraturePosition(absolutePosition, 10)
@@ -58,6 +59,9 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
 
     }
 
+    fun setPosition(input: Double) {
+        masterArm.set(ControlMode.Position, input)
+    }
     /*Enter a degree so the arm can turn to
     fun moveToPos(angle:Double) {
         targetPos = Rotation2d.createFromDegrees(angle)

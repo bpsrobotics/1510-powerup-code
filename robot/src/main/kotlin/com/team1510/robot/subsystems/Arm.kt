@@ -77,4 +77,5 @@ object Arm : Subsystem(50.0, "Arm") {
         return false
     }
 
-    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO) */
+    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
+}

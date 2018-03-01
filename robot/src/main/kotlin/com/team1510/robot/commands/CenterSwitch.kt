@@ -22,6 +22,8 @@ class CenterSwitch : CommandGroup() {
                 addSequential(AutoDrive(.3, -.6, 10.0))
                 addSequential(object: WaitCommand(.25){})
                 addSequential(AutoDrive(.3, 0.0,10.0))
+                //addSequential(EjectSwitch())
+
                 //Move arm and dump
 
             } else {
@@ -32,6 +34,8 @@ class CenterSwitch : CommandGroup() {
                 addSequential(AutoDrive(.3, .7, 11.0))
                 addSequential(object: WaitCommand(.25){})
                 addSequential(AutoDrive(.3, 0.0,10.0))
+                //addSequential(EjectSwitch())
+
                 //Move arm and dump
 
             }

@@ -17,6 +17,8 @@ class Autonomous : CommandGroup() {
             if (gameData[0] == 'R') {
                 Drivetrain.resetEncoders()
                 addSequential(AutoDrive(.3,0.0, 40.0))
+                addSequential(EjectSwitch())
+
                 //Move arm and dump
             }
             else end()

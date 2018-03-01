@@ -40,7 +40,7 @@ class ArmPIDTest : Command() {
     val _sb = StringBuilder()
 
     override fun initialize() {
-        ArmPID.masterArm.set(0.0)
+        ArmPID.setPosition(4500.0)
     }
 
     override fun execute() {
@@ -59,20 +59,28 @@ class ArmPIDTest : Command() {
             _sb.append(ArmPID.masterArm.getSelectedSensorPosition(0))
             _sb.append("u") /* units */
 
+            _sb.append("\tabs:")
+            _sb.append(ArmPID.masterArm.sensorCollection.pulseWidthPosition)
+            _sb.append("u")
+
+
             SmartDashboard.putNumber("Encoder Val", ArmPID.masterArm.getSelectedSensorPosition(0).toDouble())
             /* on button1 press enter closed-loop mode on target position */
+            /*
+            ArmPID.masterArm.set(ControlMode.PercentOutput), OI.m
+             */
             if (!_lastButton1 && OI.manipA) {
                 /* Position mode - button just pressed */
 
                 /* 10 Rotations * 4096 u/rev in either direction */
-                targetPositionRotations = OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+                targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
                 ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations)
 
             }
             /* on button2 just straight drive */
             if (OI.manipB) {
                 /* Percent voltage mode */
-                ArmPID.masterArm.set(ControlMode.PercentOutput, OI.manipRightY)
+                 ArmPID.masterArm.set(ControlMode.PercentOutput, -OI.manipRightY)
             }
             /* if Talon is in position closed-loop, print some more info */
             if (ArmPID.masterArm.controlMode == ControlMode.Position) {

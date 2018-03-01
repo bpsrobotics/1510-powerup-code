@@ -50,9 +50,9 @@ class Teleop : Command() {
 
         //println("${OI.intake}, ${OI.outtake}")
 
-        //if(OI.manipA) Intake.intakeExtend()
+        if(OI.manipA) Intake.intakeExtend()
 
-        //if(OI.manipB) Intake.intakeRetract()
+        if(OI.manipB) Intake.intakeRetract()
 
         //if(OI.manipA) Ramp.lockRamps()
 
@@ -62,9 +62,9 @@ class Teleop : Command() {
 
         if(OI.manipY) Ramp.deployRamps()
 
-        //Arm.updatePower(OI.manipRightY)
+        Arm.updatePower(OI.manipRightY)
 
-        Arm.masterArm.setPositionControl(OI.manipRightY*2000)
+        //Arm.masterArm.setPositionControl(OI.manipRightY*2000)
         //Arm.targetPos = OI.manipRightY * 1000
 
         /*if(OI.manipDeployRamp) {
