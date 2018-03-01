@@ -62,6 +62,27 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
     fun setPosition(input: Double) {
         masterArm.set(ControlMode.Position, input)
     }
+
+    fun setCenter() {
+        masterArm.set(ControlMode.Position, 4500.0)
+    }
+
+    fun setFront()  {
+        masterArm.set(ControlMode.Position, 5530.0)
+    }
+
+    fun setBack()   {
+        masterArm.set(ControlMode.Position, 3550.0)
+    }
+
+    fun setFrontSwitch()   {
+        masterArm.set(ControlMode.Position, 5045.0)
+    }
+
+    fun setBackSwitch() {
+        masterArm.set(ControlMode.Position, 4000.0)
+    }
+
     /*Enter a degree so the arm can turn to
     fun moveToPos(angle:Double) {
         targetPos = Rotation2d.createFromDegrees(angle)

@@ -20,7 +20,7 @@ open class EjectSwitch() : InstantCommand() {
     }
 
     override fun execute() {
-        ArmPID.setPosition(1000.0) //some double between min: 0 and max: 2018
+        ArmPID.setFrontSwitch() //some double between min: 0 and max: 2018
         Intake.updateLeftIntake(false, true)
         Intake.updateRightIntake(false, true)
 
