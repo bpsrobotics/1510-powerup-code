@@ -10,6 +10,7 @@ import com.team1510.robot.subsystems.DrivePIDTest
 import com.team1510.robot.subsystems.Intake
 //import com.team1510.robot.subsystems.Arm
 import edu.wpi.first.wpilibj.CameraServer
+import edu.wpi.first.wpilibj.command.Command
 import edu.wpi.first.wpilibj.smartdashboard.*
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.networktables.NetworkTable as nt
@@ -20,7 +21,7 @@ class Robot : IterativeRobot() {
 
     val teleopCommand = ArmPIDTest()
     //min5537mid4552max3550
-    //val autoChooser = SendableChooser()
+    val autoChooser: SendableChooser<Command> = SendableChooser()
 
     override fun robotInit() {
         
@@ -29,12 +30,12 @@ class Robot : IterativeRobot() {
         CameraServer.getInstance().startAutomaticCapture(1)
         CameraServer.getInstance().startAutomaticCapture(0)
 
-        /*autoChooser.addDefault("CrossLine", CrossLine())
+        autoChooser.addDefault("CrossLine", CrossLine())
         autoChooser.addObject("Center Switch", CenterSwitch())
         autoChooser.addObject("Right Switch", RightSwitch())
         autoChooser.addObject("Left Switch", LeftSwitch())
 
-        SmartDashboard.putData("Auto Chooser", autoChooser)*/
+        SmartDashboard.putData("Auto Chooser", autoChooser)
     }
 
     override fun autonomousInit() {
