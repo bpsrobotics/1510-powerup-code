@@ -40,7 +40,7 @@ class ArmPIDTest : Command() {
     val _sb = StringBuilder()
 
     override fun initialize() {
-        ArmPID.setPosition(4500.0)
+        //ArmPID.setCenter()
     }
 
     override fun execute() {

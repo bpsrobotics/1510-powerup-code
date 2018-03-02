@@ -16,11 +16,6 @@ import javax.naming.ldap.Control
 object ArmPID : Subsystem(50.0, "ArmPID") {
 
 
-    var _loops = 0;
-    var _lastButton1 = false;
-    /** save the target position to servo to */
-    var targetPositionRotations: Int = 0
-
     val masterArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
     val slaveArm = TalonWrapper(LEFT_ARM_MOTOR_CANID)
 
@@ -53,34 +48,35 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
         val absolutePosition: Int = masterArm.sensorCollection.pulseWidthPosition
 
         /* set the quadrature (relative) sensor to match absolute */
-        masterArm.sensorCollection.setQuadraturePosition(absolutePosition, 10)
+        masterArm.sensorCollection.setQuadraturePosition(0, 10)
 
         //masterArm.setSelectedSensorPosition(absolutePosition, 2, 10);
 
     }
 
-    fun setPosition(input: Double) {
-        masterArm.set(ControlMode.Position, input)
+    fun setCurrentPosition() {
+        var targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+        masterArm.set(ControlMode.Position, targetPositionRotations)
     }
 
     fun setCenter() {
-        masterArm.set(ControlMode.Position, 4500.0)
+        masterArm.set(ControlMode.Position, 0.0)
     }
 
     fun setFront()  {
-        masterArm.set(ControlMode.Position, 5530.0)
+        masterArm.set(ControlMode.Position, 1000.0)
     }
 
     fun setBack()   {
-        masterArm.set(ControlMode.Position, 3550.0)
+        masterArm.set(ControlMode.Position, -1000.0)
     }
 
     fun setFrontSwitch()   {
-        masterArm.set(ControlMode.Position, 5045.0)
+        masterArm.set(ControlMode.Position, 500.0)
     }
 
     fun setBackSwitch() {
-        masterArm.set(ControlMode.Position, 4000.0)
+        masterArm.set(ControlMode.Position, -500.0)
     }
 
     /*Enter a degree so the arm can turn to

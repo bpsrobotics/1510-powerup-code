@@ -21,6 +21,9 @@ class Robot : IterativeRobot() {
 
     val teleopCommand = ArmPIDTest()
     //min5537mid4552max3550
+    //5550
+    //4550
+    //3550
     val autoChooser: SendableChooser<Command> = SendableChooser()
 
     override fun robotInit() {
