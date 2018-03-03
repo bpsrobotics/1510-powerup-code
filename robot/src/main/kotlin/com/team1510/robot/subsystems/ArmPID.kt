@@ -45,6 +45,8 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
 
         //masterArm.setBrakeMode()
 
+        masterArm.sensorCollection.setPulseWidthPosition(0,10)
+
         val absolutePosition: Int = masterArm.sensorCollection.pulseWidthPosition
 
         /* set the quadrature (relative) sensor to match absolute */
@@ -55,7 +57,7 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
     }
 
     fun setCurrentPosition() {
-        var targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+        var targetPositionRotations = ArmPID.masterArm.sensorCollection.quadraturePosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
         masterArm.set(ControlMode.Position, targetPositionRotations)
     }
 
@@ -68,11 +70,12 @@ object ArmPID : Subsystem(50.0, "ArmPID") {
     }
 
     fun setBack()   {
-        masterArm.set(ControlMode.Position, -1000.0)
+        masterArm.set(ControlMode.Position, -950.0)
     }
 
     fun setFrontSwitch()   {
         masterArm.set(ControlMode.Position, 500.0)
+        println("Setting front")
     }
 
     fun setBackSwitch() {

@@ -15,12 +15,18 @@ class RightSwitch : CommandGroup() {
         val gameData: String = DriverStation.getInstance().gameSpecificMessage
         if (gameData.isNotEmpty()) {
             if (gameData[0] == 'R') {
-                Drivetrain.resetEncoders()
-                addSequential(AutoDrive(.3,0.0, 40.0))
+                addSequential(object: WaitCommand(.5){})
+                addSequential(UpPosition())
+                addSequential(AutoDrive(.3,0.0, 105.0))
+                addSequential(object: WaitCommand(.25){})
+                addSequential(AutoDrive(.3, -.9, 30.0))
+                addSequential(object: WaitCommand(.25){})
                 addSequential(EjectSwitch())
+                addSequential(object: WaitCommand(.5){})
+                addSequential(TimeEject(2.0))
                 //Move arm and dump
             }
-            else end()
+            else addSequential(CrossLine())
         }
     }
 }

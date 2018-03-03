@@ -25,10 +25,10 @@ object Intake: Subsystem(50.0, "Intake"){
             rightIntakeTalon.set(0.0)
         }
         if(intake) {
-            rightIntakeTalon.set(1.0)
+            rightIntakeTalon.set(.5)
         }
         if(outtake){
-            rightIntakeTalon.set(-1.0)
+            rightIntakeTalon.set(-.5)
         }
         //println("Right ${rightIntakeTalon.get()}, Left ${leftIntakeTalon.get()}")
     }
@@ -38,10 +38,10 @@ object Intake: Subsystem(50.0, "Intake"){
             leftIntakeTalon.set(0.0)
         }
         if(intake) {
-            leftIntakeTalon.set(0.75)
+            leftIntakeTalon.set(0.5)
         }
         if(outtake){
-            leftIntakeTalon.set(-0.75)
+            leftIntakeTalon.set(-0.5)
         }
         //println("Right ${rightIntakeTalon.get()}, Left ${leftIntakeTalon.get()}")
     }

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand
 
 open class EjectSwitch() : InstantCommand() {
 
+    var loop = 0
     override fun initialize() {
 
         //reqDistance = distance * IN_TO_ENC
@@ -21,15 +22,17 @@ open class EjectSwitch() : InstantCommand() {
 
     override fun execute() {
         ArmPID.setFrontSwitch() //some double between min: 0 and max: 2018
-        Intake.updateLeftIntake(false, true)
-        Intake.updateRightIntake(false, true)
+
+
+        //Intake.leftIntakeTalon.set(.75)
+        //Intake.rightIntakeTalon.set(.75)
 
 
     }
 
 
     override fun end() {
-        Intake.stop()
+        //Intake.stop()
     }
 
 

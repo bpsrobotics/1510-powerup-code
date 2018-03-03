@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation
 
 class Teleop : Command() {
 
-    var lastButtonX = false
+    var positionControlSet = false
     /** save the target position to servo to  */
     var targetPositionRotations: Double = 0.toDouble()
 
@@ -51,26 +51,35 @@ class Teleop : Command() {
 
         //println("${OI.intake}, ${OI.outtake}")
 
+        updatePositionControlSettings()
+
         if(OI.manipA) Intake.intakeExtend()
 
         if(OI.manipB) Intake.intakeRetract()
 
-        if (!lastButtonX && OI.manipX) {
-            /* Position mode - button just pressed */
+        ArmPID.masterArm.set(ControlMode.PercentOutput, -OI.manipLeftY)
 
-            /* 10 Rotations * 4096 u/rev in either direction */
-            targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
-            ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations)
+//            println("velocity")
 
-        }
-        /* on button2 just straight drive */
-        if (OI.manipY) {
-            /* Percent voltage mode */
-            ArmPID.masterArm.set(ControlMode.PercentOutput, -OI.manipLeftY)
-        }
+//        if (positionControlSet) {
+//            /* Position mode - button just pressed */
+//
+//            /* 10 Rotations * 4096 u/rev in either direction */
+//            ArmPID.setCurrentPosition()
+//            println("position")
+//            // targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+//               // ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations)
+//
+//        }
+//        /* on button2 just straight drive */
+//        if (!positionControlSet) {
+//            /* Percent voltage mode */
+//            ArmPID.masterArm.set(ControlMode.PercentOutput, -OI.manipLeftY)
+//            println("velocity")
+//        }
 
         /* save button state for on press detect */
-        lastButtonX = OI.manipX
+        //lastButtonX = OI.manipX
 
         if(OI.manipBack && OI.manipStart) Ramp.releaseLock()
 
@@ -78,7 +87,12 @@ class Teleop : Command() {
 
     }
 
+    fun updatePositionControlSettings(){
 
+        if(OI.manipX) positionControlSet = true
+        if(OI.manipY) positionControlSet = false
+
+    }
     override fun isFinished(): Boolean {
         return false
     }

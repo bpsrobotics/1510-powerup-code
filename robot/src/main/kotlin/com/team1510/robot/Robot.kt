@@ -10,6 +10,7 @@ import com.team1510.robot.subsystems.DrivePIDTest
 import com.team1510.robot.subsystems.Intake
 //import com.team1510.robot.subsystems.Arm
 import edu.wpi.first.wpilibj.CameraServer
+import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.command.Command
 import edu.wpi.first.wpilibj.smartdashboard.*
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
@@ -17,9 +18,10 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable as nt
 
 class Robot : IterativeRobot() {
 
-    val autoCommand = Autonomous()
+    var fieldConfig : String = ""
+    var autoCommand: Command = CrossLine()
 
-    val teleopCommand = ArmPIDTest()
+    val teleopCommand = Teleop()
     //min5537mid4552max3550
     //5550
     //4550
@@ -43,7 +45,9 @@ class Robot : IterativeRobot() {
 
     override fun autonomousInit() {
 
+        fieldConfig = DriverStation.getInstance().gameSpecificMessage
         if (teleopCommand.isRunning) teleopCommand.cancel()
+        autoCommand = autoChooser.selected
         autoCommand.start()
 
     }

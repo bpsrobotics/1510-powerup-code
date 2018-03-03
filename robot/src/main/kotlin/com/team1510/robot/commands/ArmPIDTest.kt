@@ -73,8 +73,9 @@ class ArmPIDTest : Command() {
                 /* Position mode - button just pressed */
 
                 /* 10 Rotations * 4096 u/rev in either direction */
-                targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
-                ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations)
+                ArmPID.setCurrentPosition()
+                //targetPositionRotations = ArmPID.masterArm.sensorCollection.pulseWidthPosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+                //ArmPID.masterArm.set(ControlMode.Position, targetPositionRotations)
 
             }
             /* on button2 just straight drive */
