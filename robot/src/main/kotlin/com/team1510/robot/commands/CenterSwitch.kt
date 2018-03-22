@@ -9,13 +9,12 @@ import edu.wpi.first.wpilibj.DriverStation
 
 
 
-class CenterSwitch : CommandGroup() {
+class CenterSwitch(val gameData: String) : CommandGroup() {
 
     init {
         Drivetrain.resetEncoders()
         addSequential(object: WaitCommand(1.0){})
         ArmPID.setCenter()
-        val gameData: String = DriverStation.getInstance().gameSpecificMessage
         if (gameData.isNotEmpty()) {
             if (gameData[0] == 'R') {
                 Drivetrain.resetEncoders()
@@ -51,5 +50,6 @@ class CenterSwitch : CommandGroup() {
 
             }
         }
+        else addSequential(CrossLine())
     }
 }

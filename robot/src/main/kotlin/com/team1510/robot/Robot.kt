@@ -2,6 +2,7 @@ package com.team1510.robot
 
 
 import com.team1510.robot.commands.*
+import com.team1510.robot.config.*
 import com.team1510.robot.subsystems.Arm
 import com.team2898.engine.logic.LoopManager
 import edu.wpi.first.wpilibj.IterativeRobot
@@ -18,15 +19,11 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable as nt
 
 class Robot : IterativeRobot() {
 
-    var fieldConfig : String = ""
-    var autoCommand: Command = CrossLine()
+    lateinit var autoCommand: Command
 
     val teleopCommand = Teleop()
-    //min5537mid4552max3550
-    //5550
-    //4550
-    //3550
-    val autoChooser: SendableChooser<Command> = SendableChooser()
+
+    val autoChooser: SendableChooser<AutoMode> = SendableChooser()
 
     override fun robotInit() {
         
@@ -35,19 +32,18 @@ class Robot : IterativeRobot() {
         CameraServer.getInstance().startAutomaticCapture(1)
         CameraServer.getInstance().startAutomaticCapture(0)
 
-        autoChooser.addDefault("CrossLine", CrossLine())
-        autoChooser.addObject("Center Switch", CenterSwitch())
-        autoChooser.addObject("Right Switch", RightSwitch())
-        autoChooser.addObject("Left Switch", LeftSwitch())
+        autoChooser.addDefault("CrossLine", AutoMode.CROSS_LINE)
+        autoChooser.addObject("Center Switch", AutoMode.CENTER_SWITCH)
+        autoChooser.addObject("Right Switch", AutoMode.RIGHT_SWITCH)
+        autoChooser.addObject("Left Switch", AutoMode.LEFT_SWITCH)
 
         SmartDashboard.putData("Auto Chooser", autoChooser)
     }
 
     override fun autonomousInit() {
 
-        fieldConfig = DriverStation.getInstance().gameSpecificMessage
         if (teleopCommand.isRunning) teleopCommand.cancel()
-        autoCommand = autoChooser.selected
+        autoCommand = AutoManager(autoChooser.selected)
         autoCommand.start()
 
     }

@@ -12,7 +12,7 @@ class CrossLine : CommandGroup() {
 
         addSequential(object: WaitCommand(.5){})
         addSequential(UpPosition())
-        addSequential(AutoDrive(.3,0.0, 70.0))
+        addSequential(AutoDrive(.3,0.0, 80.0))
 
     }
 }

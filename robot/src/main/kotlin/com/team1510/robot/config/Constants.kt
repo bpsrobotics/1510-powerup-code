@@ -20,3 +20,7 @@ const val timeoutMs = 0
 const val CONT_MAX_AMPS = 30
 const val PEAK_MAX_AMPS = 50
 const val PEAK_MAX_AMPS_DUR_MS = 500
+
+enum class AutoMode {
+    CROSS_LINE, CENTER_SWITCH, RIGHT_SWITCH, LEFT_SWITCH
+}

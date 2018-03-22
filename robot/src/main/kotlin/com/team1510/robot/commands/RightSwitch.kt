@@ -7,12 +7,11 @@ import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.command.CommandGroup
 import edu.wpi.first.wpilibj.command.WaitCommand
 
-class RightSwitch : CommandGroup() {
+class RightSwitch(val gameData: String) : CommandGroup() {
 
     init {
         Drivetrain.resetEncoders()
         ArmPID.setCenter()
-        val gameData: String = DriverStation.getInstance().gameSpecificMessage
         if (gameData.isNotEmpty()) {
             if (gameData[0] == 'R') {
                 addSequential(object: WaitCommand(.5){})
@@ -26,7 +25,9 @@ class RightSwitch : CommandGroup() {
                 addSequential(TimeEject(2.0))
                 //Move arm and dump
             }
-            else addSequential(CrossLine())
         }
+
+        else addSequential(CrossLine())
+
     }
 }
