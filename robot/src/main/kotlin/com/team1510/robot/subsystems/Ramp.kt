@@ -7,16 +7,17 @@ import edu.wpi.first.wpilibj.DoubleSolenoid
 object Ramp : Subsystem(50.0, "Ramp"){
 
     val rampLocks = DoubleSolenoid(RAMP_LOCK_SOL_FWD_ID, RAMP_LOCK_SOL_REV_ID)
-    val ramps = DoubleSolenoid(RAMP_DEPLOY_SOL_FWD_ID, RAMP_DEPLOY_SOL_REV_ID)
+    val rightRamp = DoubleSolenoid(RIGHT_RAMP_SOL_FWD_ID, RIGHT_RAMP_SOL_REV_ID)
+    val leftRamp = DoubleSolenoid(LEFT_RAMP_SOL_FWD_ID, LEFT_RAMP_SOL_REV_ID)
 
     val isLockReleased
         get() = rampLocks.get() == DoubleSolenoid.Value.kReverse
 
-    val isRampExtended
-        get() = ramps.get() == DoubleSolenoid.Value.kForward
+    val isRightRampExtended
+        get() = rightRamp.get() == DoubleSolenoid.Value.kForward
 
-    //val rightRampLock = DoubleSolenoid(RIGHT_LOCK_SOL_FWD_ID, RIGHT_LOCK_SOL_REV_ID)
-    //val leftRampLock = DoubleSolenoid(LEFT_LOCK_SOL_FWD_ID, LEFT_LOCK_SOL_REV_ID)
+    val isLeftRampExtended
+        get() = leftRamp.get() == DoubleSolenoid.Value.kForward
 
     fun releaseLock() {
         rampLocks.set(DoubleSolenoid.Value.kReverse)
@@ -26,59 +27,22 @@ object Ramp : Subsystem(50.0, "Ramp"){
         rampLocks.set(DoubleSolenoid.Value.kForward)
     }
 
-    fun deployRamps() {
-        ramps.set(DoubleSolenoid.Value.kForward)
-    }
-
-    fun retractRamps() {
-        ramps.set(DoubleSolenoid.Value.kReverse)
-    }
-    /*fun releaseRightLock() {
-        rightRamp.set(DoubleSolenoid.Value.kReverse)
-    }
-
-    fun releaseLeftLock() {
-        leftRamp.set(DoubleSolenoid.Value.kReverse)
-    }
-
-    fun extendRight() {
+    fun deployRightRamp() {
         rightRamp.set(DoubleSolenoid.Value.kForward)
     }
 
-    fun extendLeft() {
-        leftRamp.set(DoubleSolenoid.Value.kForward)
-    }
-    */
-
-    /*
-
-    fun extendBoth(){
-        rightRamp.set(DoubleSolenoid.Value.kForward)
-        leftRamp.set(DoubleSolenoid.Value.kForward)
-    }
-
-    fun retract(){
+    fun retractRightRamp() {
         rightRamp.set(DoubleSolenoid.Value.kReverse)
+    }
+
+    fun deployLeftRamp() {
+        leftRamp.set(DoubleSolenoid.Value.kForward)
+    }
+
+    fun retractLeftRamp() {
         leftRamp.set(DoubleSolenoid.Value.kReverse)
     }
 
-    fun lockRight() {
-        rightRampLock.set(DoubleSolenoid.Value.kForward)
-    }
-    fun lockLeft(){
-        leftRampLock.set(DoubleSolenoid.Value.kForward)
-    }
-
-    fun lockBoth(){
-        rightRampLock.set(DoubleSolenoid.Value.kForward)
-        leftRampLock.set(DoubleSolenoid.Value.kForward)
-    }
-
-    fun releaseLock(){
-        rightRampLock.set(DoubleSolenoid.Value.kReverse)
-        leftRampLock.set(DoubleSolenoid.Value.kReverse)
-
-    }*/
 
     override fun onStart() {}
 

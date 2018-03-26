@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable as nt
 
 class Robot : IterativeRobot() {
 
-    lateinit var autoCommand: Command
+    var autoCommand: Command = CrossLine()
 
     val teleopCommand = Teleop()
 

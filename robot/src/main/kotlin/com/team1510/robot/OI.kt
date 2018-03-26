@@ -91,6 +91,12 @@ object OI {
     val doubleJoystickClick
         get() = manipController.getRawButton(9) && manipController.getRawButton(10)
 
+    val leftJoystickClick
+        get() = manipController.getRawButton(9)
+
+    val rightJoystickClick
+        get() = manipController.getRawButton(10)
+
     val manipRightY
             get() = deadzone(manipController.getRawAxis(5))/4
             //up and down on the left joystick

@@ -39,7 +39,7 @@ def ROBOT_CLASS = "com.team1510.robot.Robot"
 deploy {
     targets {
         target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
-            addresses << '10.15.10.2'
+            addresses << 'roborio-1510-frc.local'
             team = 1510
         }
     }

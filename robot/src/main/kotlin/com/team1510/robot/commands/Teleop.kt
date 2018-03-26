@@ -20,7 +20,8 @@ class Teleop : Command() {
         Drivetrain.resetEncoders()
         Intake.intakeRetract()
         Ramp.lockRamps()
-        Ramp.retractRamps()
+        Ramp.retractRightRamp()
+        Ramp.retractLeftRamp()
         //Arm.masterArm.setPositionControl()
         //Drivetrain.setVelocityControl()
 //        AsyncLooper(1.0) {
@@ -83,7 +84,9 @@ class Teleop : Command() {
 
         if(OI.manipBack && OI.manipStart) Ramp.releaseLock()
 
-        if(Ramp.isLockReleased && OI.doubleJoystickClick) Ramp.deployRamps()
+        if(Ramp.isLockReleased && OI.rightJoystickClick) Ramp.deployRightRamp()
+
+        if(Ramp.isLockReleased && OI.leftJoystickClick) Ramp.deployLeftRamp()
 
     }
 
