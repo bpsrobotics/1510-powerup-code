@@ -73,13 +73,36 @@ object OI {
 
     val manipA
         get() = manipController.getRawButton(1)
-        //a button
+        //a button manipulator
     val manipB
         get() = manipController.getRawButton(2)
+
+    val manipX
+        get() = manipController.getRawButton(3)
+    //a button
+    val manipY
+        get() = manipController.getRawButton(4)
         //b button
+    val manipBack
+            get() = manipController.getRawButton(7)
+    val manipStart
+        get() = manipController.getRawButton(8)
+
+    val doubleJoystickClick
+        get() = manipController.getRawButton(9) && manipController.getRawButton(10)
+
+    val leftJoystickClick
+        get() = manipController.getRawButton(9)
+
+    val rightJoystickClick
+        get() = manipController.getRawButton(10)
+
     val manipRightY
             get() = deadzone(manipController.getRawAxis(5))/4
             //up and down on the left joystick
+    val manipLeftY
+        get() = deadzone(manipController.getRawAxis(1))/4
+
     val manipDeployRamp
         get() = manipController.getRawButton(7)
 

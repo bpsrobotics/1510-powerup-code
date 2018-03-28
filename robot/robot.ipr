@@ -11,16 +11,24 @@
       <entry name="!?*.java" />
       <entry name="!?*.groovy" />
     </wildcardResourcePatterns>
+<<<<<<< HEAD
+    <bytecodeTargetLevel target="1.8" />
+=======
     <bytecodeTargetLevel target="1.8">
       <module name="robot_main" target="1.9" />
       <module name="robot_test" target="1.9" />
     </bytecodeTargetLevel>
+>>>>>>> c7e50976d5009c2efebd6111573f2c642b38891c
   </component>
   <component name="CopyrightManager" default="">
     <module2copyright />
   </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+<<<<<<< HEAD
+  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+=======
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="GradleSettings">
@@ -36,6 +44,7 @@
       </GradleProjectSettings>
     </option>
   </component>
+>>>>>>> c7e50976d5009c2efebd6111573f2c642b38891c
   <component name="GradleUISettings">
     <setting name="root" />
   </component>
@@ -68,9 +77,13 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
+      <module filepath="$PROJECT_DIR$/robot.iml" fileurl="file://$PROJECT_DIR$/robot.iml" />
+=======
       <module fileurl="file://$PROJECT_DIR$/robot.iml" filepath="$PROJECT_DIR$/robot.iml" />
       <module fileurl="file://$PROJECT_DIR$/robot_main.iml" filepath="$PROJECT_DIR$/robot_main.iml" group="robot" />
       <module fileurl="file://$PROJECT_DIR$/robot_test.iml" filepath="$PROJECT_DIR$/robot_test.iml" group="robot" />
+>>>>>>> c7e50976d5009c2efebd6111573f2c642b38891c
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_9" default="false" project-jdk-name="9.0 (1)" project-jdk-type="JavaSDK">
@@ -78,6 +91,8 @@
   </component>
   <component name="SvnBranchConfigurationManager">
     <option name="mySupportsUserInfoFilter" value="true" />
+<<<<<<< HEAD
+=======
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
@@ -299,6 +314,7 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.17/63577e87886c76228db9f8a2c50ea43cde5072eb/snakeyaml-1.17-sources.jar!/" />
       </SOURCES>
     </library>
+>>>>>>> c7e50976d5009c2efebd6111573f2c642b38891c
   </component>
   <component name="masterDetails">
     <states>
