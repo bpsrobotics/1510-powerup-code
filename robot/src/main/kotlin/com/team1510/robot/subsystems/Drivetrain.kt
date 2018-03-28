@@ -1,11 +1,12 @@
-package main.kotlin.com.team1510.robot.subsystems
+package com.team1510.robot.subsystems
 
+import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
 import com.team1510.robot.config.*
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
-import main.kotlin.com.team1510.robot.config.*
+import edu.wpi.first.wpilibj.DriverStation
 
 object Drivetrain : Subsystem(50.0, "Drivetrain") {
 
@@ -14,11 +15,10 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
     val leftSlave = TalonWrapper(LEFT_SLAVE_CANID)
     val rightSlave = TalonWrapper(RIGHT_SLAVE_CANID)
     val masterList = listOf(leftMaster, rightMaster)
-
+    var gameInfo:String = DriverStation.getInstance().gameSpecificMessage
     init {
         leftSlave slaveTo leftMaster
         rightSlave slaveTo rightMaster
-
         masters {
             enableVoltageCompensation(true)
             configVoltageCompSaturation(12.0, 0)
@@ -37,11 +37,54 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
         }
     }
 
+    fun updatePIDDrive(input: DriveSignal)
+    {
+        val targetVelocity_left_UnitsPer100ms =  input.left * 4096 * 560.0 / 600;
+        val targetVelocity_right_UnitsPer100ms = -input.right * 4096 * 560.0 / 600;
+        leftMaster.set(ControlMode.Velocity, targetVelocity_left_UnitsPer100ms)
+        rightMaster.set(ControlMode.Velocity, targetVelocity_right_UnitsPer100ms)
+    }
+
     fun updateDrive(input: DriveSignal)
     {
         leftMaster.set(input.left)
-        rightMaster.set(input.right)
+        rightMaster.set(-input.right)
+       // println("$input")
     }
+
+    val leftEncPostion
+        get() = leftMaster.sensorCollection.quadraturePosition //* ENC_TO_IN
+
+    val rightEncPosition
+        get() = rightMaster.sensorCollection.quadraturePosition //* ENC_TO_IN
+
+    val leftEncVelocity
+        get() = leftMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
+
+    val rightEncVelocity
+        get() = rightMaster.sensorCollection.quadratureVelocity.toDouble() * ENC_TO_IN
+
+    fun moveDistance(left: Double, right: Double) {
+        resetEncoders()
+        leftMaster.setPositionControl(left * IN_TO_ENC)
+        rightMaster.setPositionControl(-right * IN_TO_ENC)
+    }
+
+    fun turn(degrees: Double) //degrees measured clockwise from front
+    {
+        val leftDistance: Double = degrees /45 * 20 //Change this to the more accurate function later if we don't switch to motion profile
+        val rightDistance: Double = -degrees /45 * 20
+
+        moveDistance(leftDistance, rightDistance)
+
+    }
+    fun resetEncoders()
+    {
+        leftMaster.sensorCollection.setQuadraturePosition(0, 0)
+        rightMaster.sensorCollection.setQuadraturePosition(0, 0)
+
+    }
+
 
     fun masters(block: TalonWrapper.() -> Unit) {
         masterList.forEach { srx ->
@@ -49,31 +92,21 @@ object Drivetrain : Subsystem(50.0, "Drivetrain") {
         }
     }
 
-    override fun onStart() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onStart() {}
 
-    override fun onLoop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onLoop() {}
 
-    override fun onStop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onStop() {}
 
     override fun selfCheckup(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return false
     }
 
     override fun selfTest(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return false
     }
 
-    override val enableTimes: List<GamePeriods>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
-
-
+    override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
 
 
 }

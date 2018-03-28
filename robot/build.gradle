@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.10'
+    ext.kotlin_version = '1.2.21'
     ext.serialization_version = '0.4'
     repositories {
         jcenter()
@@ -16,7 +16,7 @@ buildscript {
 plugins {
     id "java"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2018.01.11"
+    id "jaci.openrio.gradle.GradleRIO" version "2018.01.22"
 }
 
 //apply plugin: 'java-library-distribution'
@@ -39,7 +39,7 @@ def ROBOT_CLASS = "com.team1510.robot.Robot"
 deploy {
     targets {
         target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
-            addresses << '10.15.10.2'
+            addresses << 'roborio-1510-frc.local'
             team = 1510
         }
     }
@@ -75,7 +75,7 @@ dependencies {
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.8.9'
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.9'
 
-
+    compile "org.jetbrains.kotlin:kotlin-reflect:1.2.0"
     //compile "org.zeromq:jeromq:0.4.3"
 
     testCompile 'org.jetbrains.spek:spek-api:1.1.5'

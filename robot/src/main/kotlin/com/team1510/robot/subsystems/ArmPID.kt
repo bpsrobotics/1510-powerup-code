@@ -1,5 +1,6 @@
 package com.team1510.robot.subsystems
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode
 import com.team2898.engine.logic.*
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
@@ -9,8 +10,10 @@ import com.team2898.engine.kinematics.Rotation2d
 import com.team2898.engine.motion.DriveSignal
 import com.team2898.engine.motion.TalonWrapper
 import com.team2898.engine.motion.VelocityRamp
+import sun.security.pkcs11.wrapper.Constants
+import javax.naming.ldap.Control
 
-object Arm : Subsystem(50.0, "Arm") {
+object ArmPID : Subsystem(50.0, "ArmPID") {
 
 
     val masterArm = TalonWrapper(RIGHT_ARM_MOTOR_CANID)
@@ -29,7 +32,7 @@ object Arm : Subsystem(50.0, "Arm") {
 
         slaveArm slaveTo masterArm
 
-       // masterArm.setPositionControl()
+        // masterArm.setPositionControl()
 
         masterArm.setMagEncoder()
 
@@ -38,8 +41,45 @@ object Arm : Subsystem(50.0, "Arm") {
         masterArm.configPeakCurrentDuration(PEAK_MAX_AMPS_DUR_MS, 0)
         masterArm.enableCurrentLimit(true)
 
-        masterArm.setPID(0.0, 0.0, 0.0, 0.0)
+        masterArm.setPID(0.5, 0.00, 0.0, 0.0)
 
+        //masterArm.setBrakeMode()
+
+        masterArm.sensorCollection.setPulseWidthPosition(0,10)
+
+        val absolutePosition: Int = masterArm.sensorCollection.pulseWidthPosition
+
+        /* set the quadrature (relative) sensor to match absolute */
+        masterArm.sensorCollection.setQuadraturePosition(0, 10)
+
+        //masterArm.setSelectedSensorPosition(absolutePosition, 2, 10);
+
+    }
+
+    fun setCurrentPosition() {
+        var targetPositionRotations = ArmPID.masterArm.sensorCollection.quadraturePosition.toDouble() //OI.manipRightY * 4096 * 2//4096//10.0 * 4096;
+        masterArm.set(ControlMode.Position, targetPositionRotations)
+    }
+
+    fun setCenter() {
+        masterArm.set(ControlMode.Position, 0.0)
+    }
+
+    fun setFront()  {
+        masterArm.set(ControlMode.Position, 1000.0)
+    }
+
+    fun setBack()   {
+        masterArm.set(ControlMode.Position, -950.0)
+    }
+
+    fun setFrontSwitch()   {
+        masterArm.set(ControlMode.Position, 500.0)
+        println("Setting front")
+    }
+
+    fun setBackSwitch() {
+        masterArm.set(ControlMode.Position, -500.0)
     }
 
     /*Enter a degree so the arm can turn to
@@ -78,4 +118,5 @@ object Arm : Subsystem(50.0, "Arm") {
     }
 
     override val enableTimes = listOf(GamePeriods.TELEOP, GamePeriods.AUTO)
+
 }

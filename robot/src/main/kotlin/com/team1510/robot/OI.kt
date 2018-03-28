@@ -1,30 +1,35 @@
-package main.kotlin.com.team1510.robot
+package com.team1510.robot
 
 import edu.wpi.first.wpilibj.Joystick
-import edu.wpi.first.wpilibj.networktables.NetworkTable
 
 object OI {
 
-    fun deadzone(input: Double): Double{
-        if(input < 0.15) return 0.0
-        else return input
+     fun deadzone(input: Double): Double{
+        if(Math.abs(input) < 0.15) return 0.0
+        return input
     }
 
     fun square(input: Double): Double = Math.pow(input, 2.0) * if (input > 0) 1 else -1
+    fun convertVelocity (input: Double): Double {
+        return input * 4096 * 500.0 / 600
+    }
 
+    //Initiate controllers
     val driverController: Joystick = Joystick(0)
     val manipController: Joystick = Joystick(1)
 
+
+    //Begin driver controls
     val throttle
-        get() = driverController.getRawAxis(1)
+        get() = deadzone(driverController.getRawAxis(1))
         //up and down on the left joystick
 
     val turn
-        get() = driverController.getRawAxis(4)
+        get() = deadzone(driverController.getRawAxis(4))
         //left and right on the left
 
     val quickTurn: Boolean
-        get() = (driverController.getRawAxis(2) + driverController.getRawAxis(3)) != 0.0
+        get() = (Math.max(driverController.getRawAxis(2) , driverController.getRawAxis(3))) != 0.0
 
     val leftTrigger
         get() = driverController.getRawAxis(2)
@@ -33,24 +38,72 @@ object OI {
         get() = driverController.getRawAxis(3)
 
     val leftBumper
-        get() = driverController.getRawButton(5)
+        get() = manipController.getRawButton(5)
 
     val rightBumper
-        get() = driverController.getRawButton(6)
+        get() = manipController.getRawButton(6)
 
     val aButton
-        get() = driverController.getRawButton(1)
+        get() = manipController.getRawButton(1)
 
     val bButton
-        get() = driverController.getRawButton(2)
+        get() = manipController.getRawButton(2)
 
     val xButton
-        get() = driverController.getRawButton(3)
+        get() = manipController.getRawButton(3)
 
     val yButton
-        get() = driverController.getRawButton(4)
+        get() = manipController.getRawButton(4)
 
-    val deployRamp
+    val driverDeployRamp
         get() = driverController.getRawButton(7)
+        
+    //Begin operator controls
+    val manipRightTrigger :Boolean
+        get() = deadzone(manipController.getRawAxis(2)) > 0
+
+    val manipLeftTrigger:Boolean
+        get() = deadzone(manipController.getRawAxis(3)) > 0
+
+    val manipRightBumper : Boolean
+        get() = manipController.getRawButton(5)
+
+    val manipLeftBumper : Boolean
+        get() = manipController.getRawButton(6)
+
+    val manipA
+        get() = manipController.getRawButton(1)
+        //a button manipulator
+    val manipB
+        get() = manipController.getRawButton(2)
+
+    val manipX
+        get() = manipController.getRawButton(3)
+    //a button
+    val manipY
+        get() = manipController.getRawButton(4)
+        //b button
+    val manipBack
+            get() = manipController.getRawButton(7)
+    val manipStart
+        get() = manipController.getRawButton(8)
+
+    val doubleJoystickClick
+        get() = manipController.getRawButton(9) && manipController.getRawButton(10)
+
+    val leftJoystickClick
+        get() = manipController.getRawButton(9)
+
+    val rightJoystickClick
+        get() = manipController.getRawButton(10)
+
+    val manipRightY
+            get() = deadzone(manipController.getRawAxis(5))/4
+            //up and down on the left joystick
+    val manipLeftY
+        get() = deadzone(manipController.getRawAxis(1))/4
+
+    val manipDeployRamp
+        get() = manipController.getRawButton(7)
 
 }
